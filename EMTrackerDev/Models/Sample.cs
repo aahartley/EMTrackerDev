@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,11 +9,28 @@ namespace EMTrackerDev.Models
 {
     public class Sample
     {
-        public int id { get; set; }
+    
+        public int SampleID { get; set; }
 
-        public string name { get; set; }
-        public DateTime date { get; set; }
+        public string Status { get; set; }
 
-        public virtual ICollection<Result> Results { get; set; }
+        public Location Location { get; set; }
+
+        public string Type { get; set; }
+
+        public double Amount { get; set; }
+
+        public string UOM { get; set; }
+
+        public string Notes { get; set; }
+
+        public User User { get; set; }
+
+        public DateTime SampleDate { get; set; }
+
+        public ICollection<Result> Result { get; set; }
+
+   
+
     }
 }
