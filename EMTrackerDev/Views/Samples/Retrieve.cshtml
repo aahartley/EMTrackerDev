@@ -10,11 +10,12 @@
     <a asp-action="Create">Create New</a>
 </p>
 <div>
-    @Html.DisplayNameFor(model => model.Result)
+    @Html.LabelFor(model => model.Result)
     @foreach (var r in Model.Result)
     {
 
-        @Html.DisplayFor(rItem => r.ResultID) <br />    
+        @Html.HiddenFor(rItem => r.ResultName)
+
     }
 </div>
 <div>

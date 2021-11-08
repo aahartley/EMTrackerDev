@@ -13,9 +13,9 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Component" class="control-label"></label>
-                <input asp-for="Component" class="form-control" />
-                <span asp-validation-for="Component" class="text-danger"></span>
+                <label asp-for="ResultName" class="control-label"></label>
+                <input asp-for="ResultName" class="form-control" />
+                <span asp-validation-for="ResultName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Value" class="control-label"></label>
@@ -26,6 +26,11 @@
                 <label asp-for="UOM" class="control-label"></label>
                 <input asp-for="UOM" class="form-control" />
                 <span asp-validation-for="UOM" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ResultDateTime" class="control-label"></label>
+                <input asp-for="ResultDateTime" class="form-control" />
+                <span asp-validation-for="ResultDateTime" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

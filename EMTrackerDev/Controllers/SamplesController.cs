@@ -60,7 +60,6 @@ namespace EMTrackerDev.Controllers
             return View(sample);
         }
 
-
         // GET: Samples/Create
         public IActionResult Create()
         {
@@ -72,7 +71,7 @@ namespace EMTrackerDev.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SampleID,Status,Type,Amount,UOM,Notes,SampleDate")] Sample sample)
+        public async Task<IActionResult> Create([Bind("SampleID,SampleName,Amount,UOM,Notes,SampleDate")] Sample sample)
         {
             if (ModelState.IsValid)
             {
@@ -104,7 +103,7 @@ namespace EMTrackerDev.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SampleID,Status,Type,Amount,UOM,Notes,SampleDate")] Sample sample)
+        public async Task<IActionResult> Edit(int id, [Bind("SampleID,SampleName,Amount,UOM,Notes,SampleDate")] Sample sample)
         {
             if (id != sample.SampleID)
             {
@@ -142,8 +141,8 @@ namespace EMTrackerDev.Controllers
                 return NotFound();
             }
 
-            var sample = await _context.Samples.Include(sample => sample.Result)
-                               .FirstOrDefaultAsync(m => m.SampleID == id);
+            var sample = await _context.Samples.Include(s=>s.Result)
+                .FirstOrDefaultAsync(m => m.SampleID == id);
             if (sample == null)
             {
                 return NotFound();
@@ -157,8 +156,8 @@ namespace EMTrackerDev.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var sample = await _context.Samples.Include(sample => sample.Result)
-                                       .FirstOrDefaultAsync(m => m.SampleID == id);
+            var sample = await _context.Samples.Include(s => s.Result)
+                          .FirstOrDefaultAsync(m => m.SampleID == id);
             _context.Samples.Remove(sample);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

@@ -22,7 +22,7 @@ namespace EMTrackerDev.Controllers
         // GET: Results
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Results.Include(r => r.Sample).ToListAsync());
+            return View(await _context.Results.Include(r=>r.Sample).ToListAsync());
         }
 
         // GET: Results/Details/5
@@ -54,7 +54,7 @@ namespace EMTrackerDev.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ResultID,Component,Value,UOM")] Result result)
+        public async Task<IActionResult> Create([Bind("ResultID,ResultName,Value,UOM,ResultDateTime")] Result result)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace EMTrackerDev.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ResultID,Component,Value,UOM")] Result result)
+        public async Task<IActionResult> Edit(int id, [Bind("ResultID,ResultName,Value,UOM,ResultDateTime")] Result result)
         {
             if (id != result.ResultID)
             {
