@@ -17,8 +17,18 @@ namespace EMTrackerDev.Data
 
         public DbSet<EMTrackerDev.Models.Sample> Samples { get; set; }
         public DbSet<EMTrackerDev.Models.Result> Results { get; set; }
-        public DbSet<EMTrackerDev.Models.Location> Location { get; set; }
-        public DbSet<EMTrackerDev.Models.User> User { get; set; }
+        public DbSet<EMTrackerDev.Models.Location> Locations { get; set; }
+        public DbSet<EMTrackerDev.Models.User> Users { get; set; }
+        public DbSet<EMTrackerDev.Models.UserRole> UserRoles { get; set; }
+        public DbSet<EMTrackerDev.Models.Status> Status { get; set; }
+
+
+        public DbSet<EMTrackerDev.Models.Test> Tests { get; set; }
+
+        public DbSet<EMTrackerDev.Models.TestType> TestTypes { get; set; }
+        public DbSet<EMTrackerDev.Models.SampleType> SampleTypes { get; set; }
+
+
 
 
     }

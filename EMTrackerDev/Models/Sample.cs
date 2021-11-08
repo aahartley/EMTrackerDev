@@ -12,11 +12,13 @@ namespace EMTrackerDev.Models
     
         public int SampleID { get; set; }
 
-        public string Status { get; set; }
+        public string SampleName { get; set;  }
+
+        public Status Status { get; set; }
 
         public Location Location { get; set; }
 
-        public string Type { get; set; }
+        public SampleType Type { get; set; }
 
         public double Amount { get; set; }
 
@@ -29,8 +31,10 @@ namespace EMTrackerDev.Models
         public DateTime SampleDate { get; set; }
 
         public ICollection<Result> Result { get; set; }
+        public ICollection<Test>  Test { get; set; }
 
-   
+
+
 
     }
 }

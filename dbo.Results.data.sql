@@ -1,6 +1,5 @@
 ﻿SET IDENTITY_INSERT [dbo].[Results] ON
-INSERT INTO [dbo].[Results] ([ResultID], [ResultName], [SampleID]) VALUES (10, N'test', 11)
-INSERT INTO [dbo].[Results] ([ResultID], [ResultName], [SampleID]) VALUES (11, N'test', 12)
-INSERT INTO [dbo].[Results] ([ResultID], [ResultName], [SampleID]) VALUES (12, N'test', 13)
-INSERT INTO [dbo].[Results] ([ResultID], [ResultName], [SampleID]) VALUES (13, N'test', 13)
+INSERT INTO [dbo].[Results] ([ResultID], [Component], [Value], [UOM], [SampleID]) VALUES (1, N'test', 1, N'gram', 1)
+INSERT INTO [dbo].[Results] ([ResultID], [Component], [Value], [UOM], [SampleID]) VALUES (2, N'test', 1, N'gram', 2)
+INSERT INTO [dbo].[Results] ([ResultID], [Component], [Value], [UOM], [SampleID]) VALUES (3, N'test', 1, N'gram', 2)
 SET IDENTITY_INSERT [dbo].[Results] OFF
