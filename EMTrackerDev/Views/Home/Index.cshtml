@@ -1,8 +1,61 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EMTrackerDevHome</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div class="text-center">
+        <h1 class="display-4">Welcome *User*</h1>
+    </div><br /><br />
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-3">
+                Upload Sample
+                <input id="sampleBtn" type="image" class="img-fluid" src="~/imgs/sample.png">
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+            </div>
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-3">
+                Upload Test
+                <input id="testBtn" type="image" class="img-fluid" src="~/imgs/test.png" >
+
+            </div>
+            <div class="col-sm-1">
+            </div>
+            <div class="col-sm-3">
+                Generate Result
+                <input id="resultBtn" type="image" class="img-fluid" src="~/imgs/result.png">
+
+            </div>
+         
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    $("#sampleBtn").click(function () {
+        window.location.href = '@Url.Action("Create", "Samples")';
+
+    });
+    $("#testBtn").click(function () {
+        window.location.href = '@Url.Action("Create", "Tests")';
+
+    });
+    $("#resultBtn").click(function () {
+        window.location.href = '@Url.Action("Create", "Results")';
+
+    });
+</script>

@@ -10,22 +10,22 @@ using EMTrackerDev.Models;
 
 namespace EMTrackerDev.Controllers
 {
-    public class SamplesController : Controller
+    public class TestsController : Controller
     {
         private readonly EMTrackerDevContext _context;
 
-        public SamplesController(EMTrackerDevContext context)
+        public TestsController(EMTrackerDevContext context)
         {
             _context = context;
         }
 
-        // GET: Samples
+        // GET: Tests
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Samples.Include(s=>s.Result).ToListAsync());
+            return View(await _context.Tests.ToListAsync());
         }
 
-        // GET: Samples/Details/5
+        // GET: Tests/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,56 +33,39 @@ namespace EMTrackerDev.Controllers
                 return NotFound();
             }
 
-            var sample = await _context.Samples
-                .FirstOrDefaultAsync(m => m.SampleID == id);
-            if (sample == null)
+            var test = await _context.Tests
+                .FirstOrDefaultAsync(m => m.TestID == id);
+            if (test == null)
             {
                 return NotFound();
             }
 
-            return View(sample);
-        }
-        // GET: Samples/Retrieve/5
-        public async Task<IActionResult> Retrieve(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var sample = await _context.Samples.Include(sample => sample.Result)
-                .FirstOrDefaultAsync(m => m.SampleID == id);
-            if (sample == null)
-            {
-                return NotFound();
-            }
-
-            return View(sample);
+            return View(test);
         }
 
-        // GET: Samples/Create
+        // GET: Tests/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Samples/Create
+        // POST: Tests/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SampleID,SampleName,Amount,UOM,Notes,SampleDate")] Sample sample)
+        public async Task<IActionResult> Create([Bind("TestID,TestName,CollectionTime,Instruments")] Test test)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(sample);
+                _context.Add(test);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(sample);
+            return View(test);
         }
 
-        // GET: Samples/Edit/5
+        // GET: Tests/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -90,22 +73,22 @@ namespace EMTrackerDev.Controllers
                 return NotFound();
             }
 
-            var sample = await _context.Samples.FindAsync(id);
-            if (sample == null)
+            var test = await _context.Tests.FindAsync(id);
+            if (test == null)
             {
                 return NotFound();
             }
-            return View(sample);
+            return View(test);
         }
 
-        // POST: Samples/Edit/5
+        // POST: Tests/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SampleID,SampleName,Amount,UOM,Notes,SampleDate")] Sample sample)
+        public async Task<IActionResult> Edit(int id, [Bind("TestID,TestName,CollectionTime,Instruments")] Test test)
         {
-            if (id != sample.SampleID)
+            if (id != test.TestID)
             {
                 return NotFound();
             }
@@ -114,12 +97,12 @@ namespace EMTrackerDev.Controllers
             {
                 try
                 {
-                    _context.Update(sample);
+                    _context.Update(test);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SampleExists(sample.SampleID))
+                    if (!TestExists(test.TestID))
                     {
                         return NotFound();
                     }
@@ -130,10 +113,10 @@ namespace EMTrackerDev.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(sample);
+            return View(test);
         }
 
-        // GET: Samples/Delete/5
+        // GET: Tests/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -141,31 +124,31 @@ namespace EMTrackerDev.Controllers
                 return NotFound();
             }
 
-            var sample = await _context.Samples.Include(s=>s.Result).Include(s => s.Test)
-                .FirstOrDefaultAsync(m => m.SampleID == id);
-            if (sample == null)
+            var test = await _context.Tests.Include(t => t.Result)
+                .FirstOrDefaultAsync(m => m.TestID == id);
+            if (test == null)
             {
                 return NotFound();
             }
 
-            return View(sample);
+            return View(test);
         }
 
-        // POST: Samples/Delete/5
+        // POST: Tests/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var sample = await _context.Samples.Include(s => s.Result).Include(s=>s.Test)
-                          .FirstOrDefaultAsync(m => m.SampleID == id);
-            _context.Samples.Remove(sample);
+            var test = await _context.Tests.Include(t => t.Result)
+                         .FirstOrDefaultAsync(m => m.TestID == id);
+            _context.Tests.Remove(test);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SampleExists(int id)
+        private bool TestExists(int id)
         {
-            return _context.Samples.Any(e => e.SampleID == id);
+            return _context.Tests.Any(e => e.TestID == id);
         }
     }
 }

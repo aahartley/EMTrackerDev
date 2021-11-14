@@ -22,16 +22,26 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Samples" asp-action="Index">Samples</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Samples" asp-action="Index">Samples</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Tests" asp-action="Index">Tests</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Results" asp-action="Index">Results</a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Manager</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </li>
                     </ul>
                 </div>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Sign Out</a>
+
             </div>
         </nav>
     </header>
@@ -46,8 +56,8 @@
             &copy; 2021 - EMTrackerDev - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!--   <script src="~/lib/jquery/dist/jquery.min.js"></script>-->
+ <!--   <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>-->
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>

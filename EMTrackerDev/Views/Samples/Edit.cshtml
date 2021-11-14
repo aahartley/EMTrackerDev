@@ -3,48 +3,59 @@
 @{
     ViewData["Title"] = "Edit";
 }
-
+<head>
+    <style>
+        .center {
+            margin: auto;
+            width: 50%;
+            border: 3px solid green;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
 <h1>Edit</h1>
 
 <h4>Sample</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="SampleID" />
-            <div class="form-group">
-                <label asp-for="SampleName" class="control-label"></label>
-                <input asp-for="SampleName" class="form-control" />
-                <span asp-validation-for="SampleName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Amount" class="control-label"></label>
-                <input asp-for="Amount" class="form-control" />
-                <span asp-validation-for="Amount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UOM" class="control-label"></label>
-                <input asp-for="UOM" class="form-control" />
-                <span asp-validation-for="UOM" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Notes" class="control-label"></label>
-                <input asp-for="Notes" class="form-control" />
-                <span asp-validation-for="Notes" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SampleDate" class="control-label"></label>
-                <input asp-for="SampleDate" class="form-control" />
-                <span asp-validation-for="SampleDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="center">
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="SampleID" />
+                <div class="form-group">
+                    <label asp-for="SampleName" class="control-label"></label>
+                    <input asp-for="SampleName" class="form-control" />
+                    <span asp-validation-for="SampleName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Amount" class="control-label"></label>
+                    <input asp-for="Amount" class="form-control" />
+                    <span asp-validation-for="Amount" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UOM" class="control-label"></label>
+                    <input asp-for="UOM" class="form-control" />
+                    <span asp-validation-for="UOM" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Notes" class="control-label"></label>
+                    <input asp-for="Notes" class="form-control" />
+                    <span asp-validation-for="Notes" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SampleDate" class="control-label"></label>
+                    <input asp-for="SampleDate" class="form-control" />
+                    <span asp-validation-for="SampleDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-
 <div>
     <a asp-action="Index">Back to List</a>
 </div>

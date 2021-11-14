@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EMTrackerDevLogin</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/login.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+
+
+    <style>
+        body {
+            background-color: black;
+        }
+    </style>
+</head>
+
+<body class="text-center">
+    <form class="form-signin">
+        <img class="mb-4" src="~/imgs/Emtracker.png" alt="" width="250" height="225">
+        <h1 class="h3 mb-3 font-weight-normal" style="color:white;">Please sign in</h1>
+        <label for="inputEmpID" class="sr-only">Employee ID</label>
+        <input type="text" id="inputEmpID" class="form-control" placeholder="Employee ID" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <div class="checkbox mb-3">
+            <label style="color:white;">
+                <input  type="checkbox" value="remember-me"> Remember me
+            </label>
+        </div>
+        <button id="submitBt" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+    </form>
+</body>
+</html>
+<script>
+    $("#submitBt").click(function (e) {
+        e.preventDefault();
+        window.location.href = '@Url.Action("Index", "Home")';
+    });
+</script>
