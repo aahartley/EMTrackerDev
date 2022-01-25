@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <style>
-        
+
     </style>
 </head>
 <body>
@@ -18,7 +18,7 @@
         <h1 class="display-4">Welcome *User*</h1>
     </div><br /><br />
     <div class="container">
-        <div class="row">
+        <div class="text-center">
             <div class="col-sm-1">
             </div>
             <div class="col-sm-3">
@@ -26,20 +26,7 @@
                 <input id="sampleBtn" type="image" class="img-fluid" src="~/imgs/sample.png">
 
             </div>
-            <div class="col-sm-1">
-            </div>
-            <div class="col-sm-3">
-                Upload Test
-                <input id="testBtn" type="image" class="img-fluid" src="~/imgs/test.png" >
-
-            </div>
-            <div class="col-sm-1">
-            </div>
-            <div class="col-sm-3">
-                Generate Result
-                <input id="resultBtn" type="image" class="img-fluid" src="~/imgs/result.png">
-
-            </div>
+     
          
         </div>
     </div>
@@ -50,12 +37,5 @@
         window.location.href = '@Url.Action("Create", "Samples")';
 
     });
-    $("#testBtn").click(function () {
-        window.location.href = '@Url.Action("Create", "Tests")';
-
-    });
-    $("#resultBtn").click(function () {
-        window.location.href = '@Url.Action("Create", "Results")';
-
-    });
+    
 </script>
