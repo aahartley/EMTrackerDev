@@ -5,11 +5,12 @@
 }
 
 <h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-    <table id="table" class="table table-striped table-bordered table-sm" width="100%">
+@*
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p> 
+    *@
+<table id="table" class="table table-striped table-bordered table-sm" width="100%">
     <thead>
         <tr>
             <th>
@@ -25,24 +26,25 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TestName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CollectionTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Instruments)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.TestID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.TestID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.TestID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TestName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CollectionTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Instruments)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.TestID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.TestID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.TestID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
