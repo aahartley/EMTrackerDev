@@ -14,7 +14,7 @@ namespace EMTrackerDev.Models
 
         public string SampleName { get; set;  }
 
-        public Status Status { get; set; }
+        public int StatusId { get; set; }
 
         public Location Location { get; set; }
 
@@ -30,6 +30,7 @@ namespace EMTrackerDev.Models
 
         public DateTime SampleDate { get; set; }
 
+        public virtual Status Status { get; set; }
         public ICollection<Result> Result { get; set; }
         public ICollection<Test>  Test { get; set; }
 

@@ -22,7 +22,7 @@ namespace EMTrackerDev.Controllers
         // GET: Samples
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Samples.Include(s=>s.Result).ToListAsync());
+            return View(await _context.Samples.Include(s=>s.Result).Include(s=>s.Status).ToListAsync());
         }
 
         // GET: Samples/Details/5
@@ -71,10 +71,11 @@ namespace EMTrackerDev.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SampleID,SampleName,Amount,UOM,Notes,SampleDate")] Sample sample)
+        public async Task<IActionResult> Create([Bind("SampleID,SampleName,Amount,UOM,Notes,SampleDate,StatusID")] Sample sample)
         {
             if (ModelState.IsValid)
             {
+                //sample.StatusId = 1;
                 _context.Add(sample);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
