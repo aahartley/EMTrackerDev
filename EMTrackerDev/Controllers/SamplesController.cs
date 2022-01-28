@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Data.Entity.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,12 +8,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EMTrackerDev.Data;
 using EMTrackerDev.Models;
+//using System.Data.Entity.Infrastructure;
 
 namespace EMTrackerDev.Controllers
 {
     public class SamplesController : Controller
     {
         private readonly EMTrackerDevContext _context;
+
+        public void populateStatusDropList(object selectedStatus =null)
+        {
+            var statusQuery = from q in _context.Status
+                                   orderby q.StatusId
+                                   select q;
+            ViewBag.StatusId = new SelectList(statusQuery, "StatusId", "StatusName", selectedStatus);
+        }
 
         public SamplesController(EMTrackerDevContext context)
         {
@@ -71,11 +81,11 @@ namespace EMTrackerDev.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SampleID,SampleName,Amount,UOM,Notes,SampleDate,StatusID")] Sample sample)
+        public async Task<IActionResult> Create([Bind("SampleID,SampleName,Amount,UOM,Notes,SampleDate,StatusId")] Sample sample)
         {
             if (ModelState.IsValid)
             {
-                //sample.StatusId = 1;
+                sample.StatusId = 1;
                 _context.Add(sample);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -96,6 +106,8 @@ namespace EMTrackerDev.Controllers
             {
                 return NotFound();
             }
+            populateStatusDropList(sample.StatusId);
+
             return View(sample);
         }
 
@@ -104,7 +116,7 @@ namespace EMTrackerDev.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SampleID,SampleName,Amount,UOM,Notes,SampleDate")] Sample sample)
+        public async Task<IActionResult> Edit(int id, [Bind("SampleID,SampleName,Amount,UOM,Notes,SampleDate,StatusId")] Sample sample)
         {
             if (id != sample.SampleID)
             {
@@ -118,7 +130,7 @@ namespace EMTrackerDev.Controllers
                     _context.Update(sample);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException)
                 {
                     if (!SampleExists(sample.SampleID))
                     {
@@ -131,6 +143,7 @@ namespace EMTrackerDev.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            populateStatusDropList(sample.StatusId); 
             return View(sample);
         }
 
