@@ -20,15 +20,19 @@
       <div class="row">
               <div class="col-sm-4">
             </div>
-        <div class="text-center">
-        
-            <div class="col-sm-4">
-                Upload Sample
-                <input id="sampleBtn" type="image" class="img-fluid" src="~/imgs/sample.png">
-            </div>
-       
-         
-        </div>
+              <div class="text-center">
+
+                  <div class="row-cols-sm-4">
+                      <strong>Upload Sample</strong>
+                      <input id="sampleBtn" type="image" class="img-fluid" height="1000" width="1000" src="~/imgs/srssign.jpg">
+
+                  </div>
+                  <div class="row-cols-sm-4">
+                      <strong>Review Samples</strong>
+                      <input id="sampleBtn1" type="image" class="img-fluid" height="1000" width="1000" src="~/imgs/srstrain.jpg">
+                  </div>
+
+              </div>
             <div class="col-sm-4">
             </div>
      <div>
@@ -42,5 +46,9 @@
         window.location.href = '@Url.Action("Create", "Samples")';
 
     });
-    
+     $("#sampleBtn1").click(function () {
+        window.location.href = '@Url.Action("Index", "Samples")';
+
+    });
+
 </script>
