@@ -4,7 +4,7 @@
     ViewData["Title"] = "Tests";
 }
 
-<h1>Reports for @Model.SampleID</h1>
+<h1>Tests for @Model.SampleID</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -14,7 +14,7 @@
     @foreach (var r in Model.Test)
     {
 
-        @Html.DisplayFor(rItem => r.Analysis)
+        @Html.DisplayFor(modelItem => r.Analysis.Name) <br />
 
     }
 </div>

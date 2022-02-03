@@ -25,7 +25,7 @@ namespace EMTrackerDev.Data
 
                         };
                         stats.ForEach(s => context.Statuses.Add(s));
-                        context.SaveChanges();
+                        context.SaveChanges(); */
 
                 var analyses = new List<Analysis>
                  {
@@ -34,7 +34,7 @@ namespace EMTrackerDev.Data
                      new Analysis{Name="Radionuclides"}
                  };
                  analyses.ForEach(a => context.Analyses.Add(a));
-                 context.SaveChanges();
+               //  context.SaveChanges();
 
 
                  var analysisResults = new List<AnalysisResult>
@@ -44,8 +44,8 @@ namespace EMTrackerDev.Data
 
                  };
                  analysisResults.ForEach(ar => context.AnalysisResults.Add(ar));
-                 context.SaveChanges();
-            */
+                // context.SaveChanges();
+            
        
             var samples = new List<Sample>
             {
@@ -53,13 +53,13 @@ namespace EMTrackerDev.Data
                 amount=1,latitude="lat",longitude="long"}
             };
             samples.ForEach(s => context.Samples.Add(s));
-           context.SaveChanges();
+         //  context.SaveChanges();
             var tests = new List<Test>
             {
                 new Test{AnalysisId=1,SampleId=1}
             };
             tests.ForEach(t => context.Tests.Add(t));
-            context.SaveChanges();
+        //    context.SaveChanges();
 
         }
     }

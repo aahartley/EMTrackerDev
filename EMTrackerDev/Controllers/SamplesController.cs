@@ -78,6 +78,23 @@ namespace EMTrackerDev.Controllers
             return View(sample);
         }
 
+        // GET: Samples/Tests/5
+        public async Task<IActionResult> Tests(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var sample = await _context.Samples.Include(sample => sample.Test)
+                .FirstOrDefaultAsync(m => m.SampleID == id);
+            if (sample == null)
+            {
+                return NotFound();
+            }
+            return View(sample);
+        }
+
         // GET: Samples/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
