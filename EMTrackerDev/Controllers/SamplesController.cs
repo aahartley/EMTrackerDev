@@ -22,7 +22,7 @@ namespace EMTrackerDev.Controllers
         // GET: Samples
         public async Task<IActionResult> Index()
         {
-            var eMTrackerDevContext = _context.Samples.Include(s => s.AnalysisResults).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
+            var eMTrackerDevContext = _context.Samples.Include(t=>t.Test).Include(s => s.AnalysisResults).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
             return View(await eMTrackerDevContext.ToListAsync());
         }
 
