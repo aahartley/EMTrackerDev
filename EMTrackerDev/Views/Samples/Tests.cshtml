@@ -1,1 +1,24 @@
-﻿
+﻿@model EMTrackerDev.Models.Sample
+
+@{
+    ViewData["Title"] = "Tests";
+}
+
+<h1>Reports for @Model.SampleID</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div>
+    @Html.LabelFor(model => model.Test)
+    @foreach (var r in Model.Test)
+    {
+
+        @Html.DisplayFor(rItem => r.Analysis)
+
+    }
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.SampleID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
