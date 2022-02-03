@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace EMTrackerDev.Models
@@ -12,26 +13,27 @@ namespace EMTrackerDev.Models
     
         public int SampleID { get; set; }
 
-        public string SampleName { get; set;  }
-
         public int StatusId { get; set; }
+        public int? CollectedById { get; set; }
+        public int? ApprovedById { get; set; }
+        public int LocatedCodeId { get; set; }
+        public int AnalysisResultId { get; set; }
 
-        public Location Location { get; set; }
+        public DateTime CollectedDate { get; set; }
+        public DateTime ApprovedDate { get; set; }
 
-        public SampleType Type { get; set; }
+        public double amount { get; set; }
+        public string latitude { get; set; }
 
-        public double Amount { get; set; }
+        public virtual LocationCode LocationCode { get; set; }
+        public virtual User CollectedBy { get; set; }
 
-        public string UOM { get; set; }
+        public virtual User ApprovedBy { get; set; }
 
-        public string Notes { get; set; }
-
-        public User User { get; set; }
-
-        public DateTime SampleDate { get; set; }
+        public string longitude { get; set; }
+        public virtual AnalysisResult AnalysisResults { get; set; }
 
         public virtual Status Status { get; set; }
-        public ICollection<Result> Result { get; set; }
         public ICollection<Test>  Test { get; set; }
 
 

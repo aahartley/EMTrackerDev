@@ -9,16 +9,15 @@ namespace EMTrackerDev.Models
     {
         public int TestID { get; set; }
 
-        public string TestName { get; set; }
+        public int? SampleId { get; set; }
 
-        public Sample Sample { get; set; }
+        public int AnalysisId { get; set; }
 
-        public User User { get; set; }
-        public DateTime CollectionTime { get; set; }
-        public string Instruments { get; set; }
-        public TestType TestType { get; set; }
-    
-        public ICollection<Result> Result { get; set; }
+        public virtual Sample Sample { get; set; }
+
+        public virtual Analysis Analysis { get; set; }
+
+      
 
     }
 }

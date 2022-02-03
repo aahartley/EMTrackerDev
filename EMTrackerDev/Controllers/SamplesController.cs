@@ -1,5 +1,4 @@
-﻿using System.Data.Entity.Infrastructure;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,21 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EMTrackerDev.Data;
 using EMTrackerDev.Models;
-//using System.Data.Entity.Infrastructure;
 
 namespace EMTrackerDev.Controllers
 {
     public class SamplesController : Controller
     {
         private readonly EMTrackerDevContext _context;
-
-        public void populateStatusDropList(object selectedStatus =null)
-        {
-            var statusQuery = from q in _context.Status
-                                   orderby q.StatusId
-                                   select q;
-            ViewBag.StatusId = new SelectList(statusQuery, "StatusId", "StatusName", selectedStatus);
-        }
 
         public SamplesController(EMTrackerDevContext context)
         {
@@ -32,7 +22,8 @@ namespace EMTrackerDev.Controllers
         // GET: Samples
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Samples.Include(s=>s.Result).Include(s=>s.Status).ToListAsync());
+            var eMTrackerDevContext = _context.Samples.Include(s => s.AnalysisResults).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
+            return View(await eMTrackerDevContext.ToListAsync());
         }
 
         // GET: Samples/Details/5
@@ -44,23 +35,10 @@ namespace EMTrackerDev.Controllers
             }
 
             var sample = await _context.Samples
-                .FirstOrDefaultAsync(m => m.SampleID == id);
-            if (sample == null)
-            {
-                return NotFound();
-            }
-
-            return View(sample);
-        }
-        // GET: Samples/Retrieve/5
-        public async Task<IActionResult> Retrieve(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var sample = await _context.Samples.Include(sample => sample.Result)
+                .Include(s => s.AnalysisResults)
+                .Include(s => s.ApprovedBy)
+                .Include(s => s.CollectedBy)
+                .Include(s => s.Status)
                 .FirstOrDefaultAsync(m => m.SampleID == id);
             if (sample == null)
             {
@@ -73,6 +51,10 @@ namespace EMTrackerDev.Controllers
         // GET: Samples/Create
         public IActionResult Create()
         {
+            ViewData["AnalysisResultId"] = new SelectList(_context.AnalysisResults, "AnalysisResultId", "AnalysisResultId");
+            ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId");
+            ViewData["CollectedById"] = new SelectList(_context.Users, "UserId", "UserId");
+            ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId");
             return View();
         }
 
@@ -81,15 +63,18 @@ namespace EMTrackerDev.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SampleID,SampleName,Amount,UOM,Notes,SampleDate,StatusId")] Sample sample)
+        public async Task<IActionResult> Create([Bind("SampleID,StatusId,CollectedById,ApprovedById,LocatedCodeId,AnalysisResultId,CollectedDate,ApprovedDate,amount,latitude,longitude")] Sample sample)
         {
             if (ModelState.IsValid)
             {
-                sample.StatusId = 1;
                 _context.Add(sample);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AnalysisResultId"] = new SelectList(_context.AnalysisResults, "AnalysisResultId", "AnalysisResultId", sample.AnalysisResultId);
+            ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.ApprovedById);
+            ViewData["CollectedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.CollectedById);
+            ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", sample.StatusId);
             return View(sample);
         }
 
@@ -106,8 +91,10 @@ namespace EMTrackerDev.Controllers
             {
                 return NotFound();
             }
-            populateStatusDropList(sample.StatusId);
-
+            ViewData["AnalysisResultId"] = new SelectList(_context.AnalysisResults, "AnalysisResultId", "AnalysisResultId", sample.AnalysisResultId);
+            ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.ApprovedById);
+            ViewData["CollectedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.CollectedById);
+            ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", sample.StatusId);
             return View(sample);
         }
 
@@ -116,7 +103,7 @@ namespace EMTrackerDev.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SampleID,SampleName,Amount,UOM,Notes,SampleDate,StatusId")] Sample sample)
+        public async Task<IActionResult> Edit(int id, [Bind("SampleID,StatusId,CollectedById,ApprovedById,LocatedCodeId,AnalysisResultId,CollectedDate,ApprovedDate,amount,latitude,longitude")] Sample sample)
         {
             if (id != sample.SampleID)
             {
@@ -130,7 +117,7 @@ namespace EMTrackerDev.Controllers
                     _context.Update(sample);
                     await _context.SaveChangesAsync();
                 }
-                catch (Microsoft.EntityFrameworkCore.DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException)
                 {
                     if (!SampleExists(sample.SampleID))
                     {
@@ -143,7 +130,10 @@ namespace EMTrackerDev.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            populateStatusDropList(sample.StatusId); 
+            ViewData["AnalysisResultId"] = new SelectList(_context.AnalysisResults, "AnalysisResultId", "AnalysisResultId", sample.AnalysisResultId);
+            ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.ApprovedById);
+            ViewData["CollectedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.CollectedById);
+            ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", sample.StatusId);
             return View(sample);
         }
 
@@ -155,7 +145,11 @@ namespace EMTrackerDev.Controllers
                 return NotFound();
             }
 
-            var sample = await _context.Samples.Include(s=>s.Result).Include(s => s.Test)
+            var sample = await _context.Samples
+                .Include(s => s.AnalysisResults)
+                .Include(s => s.ApprovedBy)
+                .Include(s => s.CollectedBy)
+                .Include(s => s.Status)
                 .FirstOrDefaultAsync(m => m.SampleID == id);
             if (sample == null)
             {
@@ -170,8 +164,7 @@ namespace EMTrackerDev.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var sample = await _context.Samples.Include(s => s.Result).Include(s=>s.Test)
-                          .FirstOrDefaultAsync(m => m.SampleID == id);
+            var sample = await _context.Samples.FindAsync(id);
             _context.Samples.Remove(sample);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

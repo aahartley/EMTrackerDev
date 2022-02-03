@@ -3,66 +3,73 @@
 @{
     ViewData["Title"] = "Edit";
 }
-<head>
-    <style>
-        .center {
-            margin: auto;
-            width: 50%;
-            border: 3px solid green;
-            padding: 10px;
-            text-align: center;
-        }
-    </style>
-</head>
+
 <h1>Edit</h1>
 
 <h4>Sample</h4>
 <hr />
-<div class="center">
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Edit">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="SampleID" />
-                <div class="form-group">
-                    <label asp-for="SampleName" class="control-label"></label>
-                    <input asp-for="SampleName" class="form-control" />
-                    <span asp-validation-for="SampleName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Amount" class="control-label"></label>
-                    <input asp-for="Amount" class="form-control" />
-                    <span asp-validation-for="Amount" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="UOM" class="control-label"></label>
-                    <input asp-for="UOM" class="form-control" />
-                    <span asp-validation-for="UOM" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Notes" class="control-label"></label>
-                    <input asp-for="Notes" class="form-control" />
-                    <span asp-validation-for="Notes" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="SampleDate" class="control-label"></label>
-                    <input asp-for="SampleDate" class="form-control" />
-                    <span asp-validation-for="SampleDate" class="text-danger"></span>
-                </div>
-             <div class="form-group">
-            <label class="control-label col-md-2" for="StatusId">Status</label>
-            <div class="col-md-10">
-                @Html.DropDownList("StatusId", String.Empty)
-                @Html.ValidationMessageFor(model => model.StatusId)
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SampleID" />
+            <div class="form-group">
+                <label asp-for="StatusId" class="control-label"></label>
+                <select asp-for="StatusId" class="form-control" asp-items="ViewBag.StatusId"></select>
+                <span asp-validation-for="StatusId" class="text-danger"></span>
             </div>
-        </div>
-                <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary" />
-                </div>
-            </form>
-        </div>
+            <div class="form-group">
+                <label asp-for="CollectedById" class="control-label"></label>
+                <select asp-for="CollectedById" class="form-control" asp-items="ViewBag.CollectedById"></select>
+                <span asp-validation-for="CollectedById" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApprovedById" class="control-label"></label>
+                <select asp-for="ApprovedById" class="form-control" asp-items="ViewBag.ApprovedById"></select>
+                <span asp-validation-for="ApprovedById" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LocatedCodeId" class="control-label"></label>
+                <input asp-for="LocatedCodeId" class="form-control" />
+                <span asp-validation-for="LocatedCodeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AnalysisResultId" class="control-label"></label>
+                <select asp-for="AnalysisResultId" class="form-control" asp-items="ViewBag.AnalysisResultId"></select>
+                <span asp-validation-for="AnalysisResultId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CollectedDate" class="control-label"></label>
+                <input asp-for="CollectedDate" class="form-control" />
+                <span asp-validation-for="CollectedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApprovedDate" class="control-label"></label>
+                <input asp-for="ApprovedDate" class="form-control" />
+                <span asp-validation-for="ApprovedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="amount" class="control-label"></label>
+                <input asp-for="amount" class="form-control" />
+                <span asp-validation-for="amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="latitude" class="control-label"></label>
+                <input asp-for="latitude" class="form-control" />
+                <span asp-validation-for="latitude" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="longitude" class="control-label"></label>
+                <input asp-for="longitude" class="form-control" />
+                <span asp-validation-for="longitude" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
     </div>
 </div>
+
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
