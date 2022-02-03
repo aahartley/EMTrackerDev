@@ -25,9 +25,9 @@ namespace EMTrackerDev.Data
 
                         };
                         stats.ForEach(s => context.Statuses.Add(s));
-                        context.SaveChanges();*/
+                        context.SaveChanges();
 
-            /*     var analyses = new List<Analysis>
+                var analyses = new List<Analysis>
                  {
                      new Analysis{Name="Metal"},
                      new Analysis{Name="Radioactivity"},
@@ -44,12 +44,18 @@ namespace EMTrackerDev.Data
 
                  };
                  analysisResults.ForEach(ar => context.AnalysisResults.Add(ar));
-                 context.SaveChanges();*/
-
+                 context.SaveChanges();
+            */
+            var tests = new List<Test>
+            {
+                new Test{AnalysisId=1}
+            };
+            tests.ForEach(t => context.Tests.Add(t));
+            context.SaveChanges();
             var samples = new List<Sample>
             {
                 new Sample{StatusId=1,LocatedCodeId=1,AnalysisResultId=1,CollectedDate=DateTime.Parse("2021-10-27"),
-                amount=1,latitude="lat",longitude="long"}
+                amount=1,latitude="lat",longitude="long",Test=tests[0]}
             };
             samples.ForEach(s => context.Samples.Add(s));
            context.SaveChanges();
