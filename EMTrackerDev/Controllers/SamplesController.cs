@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EMTrackerDev.Data;
 using EMTrackerDev.Models;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace EMTrackerDev.Controllers
 {
@@ -22,7 +23,7 @@ namespace EMTrackerDev.Controllers
         // GET: Samples
         public async Task<IActionResult> Index()
         {
-            var eMTrackerDevContext = _context.Samples.Include(t=>t.Test).Include(s => s.AnalysisResults).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
+            var eMTrackerDevContext = _context.Samples.Include(s => s.Test).Include(s => s.AnalysisResults).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
             return View(await eMTrackerDevContext.ToListAsync());
         }
 
@@ -77,22 +78,29 @@ namespace EMTrackerDev.Controllers
             ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", sample.StatusId);
             return View(sample);
         }
+   
 
         // GET: Samples/Tests/5
         public async Task<IActionResult> Tests(int? id)
         {
+
+         /*   var eMTrackerDevContext = await (from b in _context.Samples
+                               orderby b.SampleID
+                               select b).ToListAsync();
+            return View(eMTrackerDevContext.ToList());*/
             if (id == null)
             {
                 return NotFound();
             }
 
-            var sample = await _context.Samples.Include(sample => sample.Test)
+            var sample = await _context.Samples.Include(sample => sample.Test).Include(sample=>sample.AnalysisResults.Analysis)
                 .FirstOrDefaultAsync(m => m.SampleID == id);
             if (sample == null)
             {
                 return NotFound();
             }
             return View(sample);
+
         }
 
         // GET: Samples/Edit/5

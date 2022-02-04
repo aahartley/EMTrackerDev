@@ -11,7 +11,7 @@ namespace EMTrackerDev.Models
 
         public int? SampleId { get; set; }
 
-        public int AnalysisId { get; set; }
+        public int? AnalysisId { get; set; }
 
         public virtual Sample Sample { get; set; }
 

@@ -29,10 +29,8 @@ namespace EMTrackerDev.Models
         public virtual User CollectedBy { get; set; }
 
         public virtual User ApprovedBy { get; set; }
-
         public string longitude { get; set; }
         public virtual AnalysisResult AnalysisResults { get; set; }
-
         public virtual Status Status { get; set; }
         public ICollection<Test>  Test { get; set; }
 
