@@ -75,7 +75,8 @@ namespace EMTrackerDev.Controllers
             ViewData["AnalysisResultId"] = new SelectList(_context.AnalysisResults, "AnalysisResultId", "AnalysisResultId", sample.AnalysisResultId);
             ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.ApprovedById);
             ViewData["CollectedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.CollectedById);
-            ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", sample.StatusId);
+            //ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", sample.StatusId);
+            populateStatusDropList();
             return View(sample);
         }
    
@@ -119,7 +120,8 @@ namespace EMTrackerDev.Controllers
             ViewData["AnalysisResultId"] = new SelectList(_context.AnalysisResults, "AnalysisResultId", "AnalysisResultId", sample.AnalysisResultId);
             ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.ApprovedById);
             ViewData["CollectedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.CollectedById);
-            ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", sample.StatusId);
+            //ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", sample.Status.StatusId);
+            populateStatusDropList();
             return View(sample);
         }
 
@@ -198,6 +200,13 @@ namespace EMTrackerDev.Controllers
         private bool SampleExists(int id)
         {
             return _context.Samples.Any(e => e.SampleID == id);
+        }
+        public void populateStatusDropList(object selectedStatus = null)
+        {
+            var statusQuery = from q in _context.Statuses
+                              orderby q.StatusId
+                              select q;
+            ViewBag.StatusId = new SelectList(statusQuery, "StatusId", "StatusName", selectedStatus);
         }
     }
 }

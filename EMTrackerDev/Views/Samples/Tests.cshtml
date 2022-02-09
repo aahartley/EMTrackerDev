@@ -7,7 +7,7 @@
 <h1>Reports for @Model.SampleID</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    @Html.ActionLink("Create", "Create", "Tests")
 </p>
 <div>
     @Html.LabelFor(model => model.Test)
