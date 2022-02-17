@@ -1,0 +1,25 @@
+﻿@model EMTrackerDev.Models.Sample
+
+@{
+    ViewData["Title"] = "Analysis";
+}
+
+<h1>Reports for @Model.SampleID</h1>
+
+<p>
+    @Html.ActionLink("Create", "Create", "Tests")
+</p>
+<div>
+    @Html.LabelFor(model => model.Test)
+    @foreach (var r in Model.Test)
+    {
+
+        @Html.DisplayFor(rItem => r.Analysis.Name)
+        @Html.ActionLink("Edit", "Edit", "Tests", new { id = r.TestID }) <br />
+
+
+    }
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

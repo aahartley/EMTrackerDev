@@ -23,10 +23,15 @@ namespace EMTrackerDev.Controllers
         // GET: Samples
         public async Task<IActionResult> Index()
         {
-            var eMTrackerDevContext = _context.Samples.Include(s => s.Test).Include(s => s.AnalysisResults).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
+            var eMTrackerDevContext = _context.Samples.Where(s => s.StatusId == 1).Include(s=>s.Analysis).Include(s => s.Test).Include(s => s.AnalysisResults).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
             return View(await eMTrackerDevContext.ToListAsync());
         }
-
+        public async Task<IActionResult> Collected()
+        {
+            int[] keys= new int[10];
+            var eMTrackerDevContext = _context.Samples.Where(s=> s.StatusId == 2).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.AnalysisResults).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
+            return View(await eMTrackerDevContext.ToListAsync());
+        }
         // GET: Samples/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -55,7 +60,7 @@ namespace EMTrackerDev.Controllers
             ViewData["AnalysisResultId"] = new SelectList(_context.AnalysisResults, "AnalysisResultId", "AnalysisResultId");
             ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId");
             ViewData["CollectedById"] = new SelectList(_context.Users, "UserId", "UserId");
-            ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId");
+            ViewData["AnalysisId"] = new SelectList(_context.Analyses, "AnalysisId", "AnalysisId");
             return View();
         }
 
@@ -64,10 +69,11 @@ namespace EMTrackerDev.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SampleID,StatusId,CollectedById,ApprovedById,LocatedCodeId,AnalysisResultId,CollectedDate,ApprovedDate,amount,latitude,longitude")] Sample sample)
+        public async Task<IActionResult> Create([Bind("SampleID,AnalysisId,CollectedById,ApprovedById,LocatedCodeId,AnalysisResultId,CollectedDate,ApprovedDate,amount,latitude,longitude")] Sample sample)
         {
             if (ModelState.IsValid)
             {
+                sample.StatusId = 1;
                 _context.Add(sample);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -75,7 +81,7 @@ namespace EMTrackerDev.Controllers
             ViewData["AnalysisResultId"] = new SelectList(_context.AnalysisResults, "AnalysisResultId", "AnalysisResultId", sample.AnalysisResultId);
             ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.ApprovedById);
             ViewData["CollectedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.CollectedById);
-            //ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", sample.StatusId);
+            ViewData["AnalysisId"] = new SelectList(_context.Analyses, "AnalysisId", "AnalysisId", sample.AnalysisId);
             populateStatusDropList();
             return View(sample);
         }

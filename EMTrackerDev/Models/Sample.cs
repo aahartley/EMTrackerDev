@@ -21,13 +21,14 @@ namespace EMTrackerDev.Models
 
         public DateTime CollectedDate { get; set; }
         public DateTime ApprovedDate { get; set; }
-
+        public int? AnalysisId { get; set; }
         public double amount { get; set; }
         public string latitude { get; set; }
 
         public virtual LocationCode LocationCode { get; set; }
         public virtual User CollectedBy { get; set; }
 
+        public virtual Analysis Analysis { get; set; }
         public virtual User ApprovedBy { get; set; }
         public string longitude { get; set; }
         public virtual AnalysisResult AnalysisResults { get; set; }
