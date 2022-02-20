@@ -22,7 +22,7 @@ namespace EMTrackerDev.Controllers
         // GET: Tests
         public async Task<IActionResult> Index()
         {
-            var eMTrackerDevContext = _context.Tests.Include(t => t.Analysis).Include(t => t.Sample);
+            var eMTrackerDevContext = _context.Tests.Include(t => t.AnalysisResult).Include(t => t.Sample);
             return View(await eMTrackerDevContext.ToListAsync());
         }
 
@@ -35,7 +35,7 @@ namespace EMTrackerDev.Controllers
             }
 
             var test = await _context.Tests
-                .Include(t => t.Analysis)
+                .Include(t => t.AnalysisResult)
                 .Include(t => t.Sample)
                 .FirstOrDefaultAsync(m => m.TestID == id);
             if (test == null)
@@ -49,7 +49,7 @@ namespace EMTrackerDev.Controllers
         // GET: Tests/Create
         public IActionResult Create()
         {
-            ViewData["AnalysisId"] = new SelectList(_context.Analyses, "AnalysisId", "AnalysisId");
+            ViewData["AnalysisResultId"] = new SelectList(_context.AnalysisResults, "AnalysisResultId", "AnalysisResultId");
             ViewData["SampleId"] = new SelectList(_context.Samples, "SampleID", "SampleID");
             return View();
         }
@@ -59,7 +59,7 @@ namespace EMTrackerDev.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TestID,SampleId,AnalysisId")] Test test)
+        public async Task<IActionResult> Create([Bind("TestID,SampleId,AnalysisResultId")] Test test)
         {
             if (ModelState.IsValid)
             {
@@ -67,7 +67,7 @@ namespace EMTrackerDev.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AnalysisId"] = new SelectList(_context.Analyses, "AnalysisId", "AnalysisId", test.AnalysisId);
+            ViewData["AnalysisResultId"] = new SelectList(_context.AnalysisResults, "AnalysisResultId", "AnalysisResultId", test.AnalysisResultId);
             ViewData["SampleId"] = new SelectList(_context.Samples, "SampleID", "SampleID", test.SampleId);
             return View(test);
         }
@@ -85,7 +85,7 @@ namespace EMTrackerDev.Controllers
             {
                 return NotFound();
             }
-            ViewData["AnalysisId"] = new SelectList(_context.Analyses, "AnalysisId", "AnalysisId", test.AnalysisId);
+            ViewData["AnalysisResultId"] = new SelectList(_context.AnalysisResults, "AnalysisResultId", "AnalysisResultId", test.AnalysisResultId);
             ViewData["SampleId"] = new SelectList(_context.Samples, "SampleID", "SampleID", test.SampleId);
             return View(test);
         }
@@ -95,7 +95,7 @@ namespace EMTrackerDev.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TestID,SampleId,AnalysisId")] Test test)
+        public async Task<IActionResult> Edit(int id, [Bind("TestID,SampleId,AnalysisResultId")] Test test)
         {
             if (id != test.TestID)
             {
@@ -122,7 +122,7 @@ namespace EMTrackerDev.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AnalysisId"] = new SelectList(_context.Analyses, "AnalysisId", "AnalysisId", test.AnalysisId);
+            ViewData["AnalysisResultId"] = new SelectList(_context.AnalysisResults, "AnalysisResultId", "AnalysisResultId", test.AnalysisResultId);
             ViewData["SampleId"] = new SelectList(_context.Samples, "SampleID", "SampleID", test.SampleId);
             return View(test);
         }
@@ -136,7 +136,7 @@ namespace EMTrackerDev.Controllers
             }
 
             var test = await _context.Tests
-                .Include(t => t.Analysis)
+                .Include(t => t.AnalysisResult)
                 .Include(t => t.Sample)
                 .FirstOrDefaultAsync(m => m.TestID == id);
             if (test == null)

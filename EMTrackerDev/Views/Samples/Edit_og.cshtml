@@ -18,12 +18,32 @@
                     @Html.DropDownList("StatusId", String.Empty)
                     @Html.ValidationMessageFor(model => model.StatusId)
                 </div>
-             <!--   <span asp-validation-for="StatusId" class="text-danger"></span> -->
+                <span asp-validation-for="StatusId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CollectedById" class="control-label"></label>
+                <select asp-for="CollectedById" class="form-control" asp-items="ViewBag.CollectedById"></select>
+                <span asp-validation-for="CollectedById" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApprovedById" class="control-label"></label>
+                <select asp-for="ApprovedById" class="form-control" asp-items="ViewBag.ApprovedById"></select>
+                <span asp-validation-for="ApprovedById" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LocatedCodeId" class="control-label"></label>
+                <input asp-for="LocatedCodeId" class="form-control" />
+                <span asp-validation-for="LocatedCodeId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CollectedDate" class="control-label"></label>
                 <input asp-for="CollectedDate" class="form-control" />
                 <span asp-validation-for="CollectedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApprovedDate" class="control-label"></label>
+                <input asp-for="ApprovedDate" class="form-control" />
+                <span asp-validation-for="ApprovedDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="amount" class="control-label"></label>

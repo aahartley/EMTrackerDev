@@ -1,25 +1,36 @@
-﻿@model EMTrackerDev.Models.Sample
+﻿@model IEnumerable<EMTrackerDev.Models.Test>
 
 @{
-    ViewData["Title"] = "Retrieve";
+    ViewData["Title"] = "Index";
 }
 
-<h1>Reports for @Model.SampleID</h1>
+<h1>Index</h1>
 
 <p>
-    @Html.ActionLink("Create", "Create", "Tests")
+    <a asp-action="Create">Create New</a>
 </p>
-<div>
-    @Html.LabelFor(model => model.Test)
-    @foreach (var r in Model.Test)
-    {
-
-        @Html.DisplayFor(rItem => r.Analysis.Name)
-                @Html.ActionLink("Edit", "Edit", "Tests",new{ id=r.TestID}) <br />
-
-
-    }
-</div>
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+<h1>Reports for @ViewBag.Id</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AnalysisResult)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnalysisResult.AnalysisResultId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.TestID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.TestID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.TestID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -2,6 +2,7 @@
 {
     public class AnalysisResult
     {
+
         public int AnalysisResultId { get; set; }
 
         public int AnalysisId { get; set; }
