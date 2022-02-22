@@ -60,8 +60,21 @@ namespace EMTrackerDev.Data
                 new Test{AnalysisResultId=1,SampleId=1}
             };
             tests.ForEach(t => context.Tests.Add(t));
-         //  context.SaveChanges();
+            //  context.SaveChanges();
 
+
+            var userRoles = new List<UserRole>
+            {
+                new UserRole{ }
+            };
+            userRoles.ForEach(s => context.UserRoles.Add(s));
+            //  context.SaveChanges();
+            var users = new List<User>
+            {
+                new User{ }
+            };
+            users.ForEach(s => context.Users.Add(s));
+            //  context.SaveChanges();
         }
     }
 }

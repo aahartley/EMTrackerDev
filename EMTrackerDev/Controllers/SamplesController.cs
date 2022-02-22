@@ -38,8 +38,11 @@ namespace EMTrackerDev.Controllers
         }
         public async Task<IActionResult> Approved()
         {
-            var eMTrackerDevContext = _context.Samples.Where(s => s.StatusId == 4).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
-            return View(await eMTrackerDevContext.ToListAsync());
+            var eMTrackerDevContext = _context.TestResults.Where(s => s.EnteredById != null);
+            List<int> Ids = eMTrackerDevContext.Select(o => o.TestId).ToList();
+            var samples = _context.Samples.Where(c => Ids.Contains(c.SampleID)).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
+         //   var eMTrackerDevContext2 = _context.Samples.Where(s => s.StatusId == 4).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
+            return View(await samples.ToListAsync());
         }
         // GET: Samples/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -90,10 +93,19 @@ namespace EMTrackerDev.Controllers
                 Console.WriteLine("WTFFFF " + sampleId + " " + analysisId);
                 var ars = _context.AnalysisResults.Where(s => s.AnalysisId == analysisId);
                 List<AnalysisResult> analysisResults = ars.ToList();
+                List<Test> tests = new List<Test>();
                 for (int i = 0; i < analysisResults.Count(); i++)
                 {
                     var test = new Test { AnalysisResultId = analysisResults[i].AnalysisResultId, SampleId = sampleId };
+                    tests.Add(test);
                     _context.Add(test);
+                }
+                await _context.SaveChangesAsync();
+
+                for (int i = 0; i < tests.Count(); i++)
+                {
+                    var testResult = new TestResult { AnalysisReportId =(int) tests[i].AnalysisResultId, TestId = tests[i].TestID };
+                    _context.Add(testResult);
                 }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -129,8 +141,10 @@ namespace EMTrackerDev.Controllers
                return View(sample);*/
             //test result,  to edit
             var eMTrackerDevContext = _context.Tests.Where(s => s.SampleId == id).Include(s => s.AnalysisResult).Include(s=>s.Sample);
+            List<int> Ids = eMTrackerDevContext.Select(o => o.TestID).ToList();
+            var testResults = _context.TestResults.Where(c => Ids.Contains(c.TestId)).Include(c=> c.AnalysisResults).Include(c=>c.Test);
             ViewBag.Id = id ;
-            return View(await eMTrackerDevContext.ToListAsync());
+            return View(await testResults.ToListAsync());
 
         }
 

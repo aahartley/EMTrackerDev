@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EMTrackerDev.Models.Test>
+﻿@model IEnumerable<EMTrackerDev.Models.TestResult>
 
 @{
     ViewData["Title"] = "Index";
@@ -10,27 +10,53 @@
     <a asp-action="Create">Create New</a>
 </p>
 <h1>Reports for @ViewBag.Id</h1>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.AnalysisResult)
+                @Html.DisplayNameFor(model => model.AnalysisReportId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EnteredBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Test)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.AnalysisResult.AnalysisResultId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.TestID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.TestID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.TestID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AnalysisReportId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EnteredBy.UserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Test.TestID)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.TestResultId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.TestResultId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.TestResultId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

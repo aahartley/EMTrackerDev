@@ -8,7 +8,7 @@ namespace EMTrackerDev.Models
         public int TestResultId { get; set; }
 
         public int AnalysisReportId { get; set; }
-        public int EnteredById { get; set; }
+        public int? EnteredById { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public virtual User EnteredBy { get; set; }
