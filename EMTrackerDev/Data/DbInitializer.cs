@@ -37,6 +37,7 @@ namespace EMTrackerDev.Data
 
           //  context.SaveChanges();
 
+
             var analysisResults = new List<AnalysisResult>
                  {
                      new AnalysisResult{AnalysisId=1,Component="Aluminum",UOM="µg/L"},
@@ -44,37 +45,27 @@ namespace EMTrackerDev.Data
 
                  };
                  analysisResults.ForEach(ar => context.AnalysisResults.Add(ar));
-         //   context.SaveChanges();
+          //   context.SaveChanges();
 
 
-            var samples = new List<Sample>
-            {
-                new Sample{StatusId=1,LocatedCodeId=1,CollectedDate=DateTime.Parse("2021-10-27"),
-                amount=1,latitude="lat",longitude="long"}
-            };
-            samples.ForEach(s => context.Samples.Add(s));
-          //  context.SaveChanges();
-
-            var tests = new List<Test>
-            {
-                new Test{AnalysisResultId=1,SampleId=1}
-            };
-            tests.ForEach(t => context.Tests.Add(t));
-            //  context.SaveChanges();
+   
 
 
             var userRoles = new List<UserRole>
             {
-                new UserRole{ }
+                new UserRole{ Role="Employee"},
+                new UserRole{Role="Manager"}
             };
             userRoles.ForEach(s => context.UserRoles.Add(s));
-            //  context.SaveChanges();
+         //    context.SaveChanges();
             var users = new List<User>
             {
-                new User{ }
+                new User{ UserRoleId=1,UserName="name",Password="password",FirstName="first",LastName="last"},
+                new User{ UserRoleId=2,UserName="name",Password="password",FirstName="first2",LastName="last2"}
+
             };
             users.ForEach(s => context.Users.Add(s));
-            //  context.SaveChanges();
+        //     context.SaveChanges();
         }
     }
 }

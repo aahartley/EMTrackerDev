@@ -142,7 +142,7 @@ namespace EMTrackerDev.Controllers
             //test result,  to edit
             var eMTrackerDevContext = _context.Tests.Where(s => s.SampleId == id).Include(s => s.AnalysisResult).Include(s=>s.Sample);
             List<int> Ids = eMTrackerDevContext.Select(o => o.TestID).ToList();
-            var testResults = _context.TestResults.Where(c => Ids.Contains(c.TestId)).Include(c=> c.AnalysisResults).Include(c=>c.Test);
+            var testResults = _context.TestResults.Where(c => Ids.Contains(c.TestId)).Include(c=> c.AnalysisResults).Include(c=>c.Test).Include(c=>c.EnteredBy);
             ViewBag.Id = id ;
             return View(await testResults.ToListAsync());
 
@@ -228,22 +228,20 @@ namespace EMTrackerDev.Controllers
                 return NotFound();
             }
 
-            var sample = await _context.Samples.FindAsync(id);
-            if (sample == null)
+            var testResult = await _context.TestResults.FindAsync(id);
+            if (testResult == null)
             {
                 return NotFound();
             }
-            ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.ApprovedById);
-            ViewData["CollectedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.CollectedById);
-            //ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", sample.Status.StatusId);
-            populateStatusDropList();
-            return View(sample);
+            ViewData["EnteredById"] = new SelectList(_context.Users, "UserId", "UserId", testResult.EnteredById);
+            ViewData["TestId"] = new SelectList(_context.Tests, "TestID", "TestID", testResult.TestId);
+            return View(testResult);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit_TestResults(int id, [Bind("SampleID,StatusId,CollectedById,ApprovedById,LocatedCodeId,AnalysisResultId,CollectedDate,ApprovedDate,amount,latitude,longitude")] Sample sample)
+        public async Task<IActionResult> Edit_TestResults(int id, [Bind("TestResultId,AnalysisReportId,EnteredById,StartDate,EndDate,TestId")] TestResult testResult)
         {
-            if (id != sample.SampleID)
+            if (id != testResult.TestResultId)
             {
                 return NotFound();
             }
@@ -252,13 +250,13 @@ namespace EMTrackerDev.Controllers
             {
                 try
                 {
-                    sample.StatusId = 3;
-                    _context.Update(sample);
+                    Console.WriteLine(testResult.TestId + " " + "WTFFFFFF");
+                    _context.Update(testResult);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SampleExists(sample.SampleID))
+                    if (!TestResultExists(testResult.TestResultId))
                     {
                         return NotFound();
                     }
@@ -267,12 +265,12 @@ namespace EMTrackerDev.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Collected));
+                return RedirectToAction(nameof(InProcess));
             }
-            ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.ApprovedById);
-            ViewData["CollectedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.CollectedById);
-            ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", sample.StatusId);
-            return View(sample);
+            ViewData["EnteredById"] = new SelectList(_context.Users, "UserId", "UserId", testResult.EnteredById);
+            ViewData["TestId"] = new SelectList(_context.Tests, "TestID", "TestID", testResult.TestId);
+
+            return View(testResult);
         }
         // POST: Samples/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
@@ -348,6 +346,10 @@ namespace EMTrackerDev.Controllers
         private bool SampleExists(int id)
         {
             return _context.Samples.Any(e => e.SampleID == id);
+        }
+        private bool TestResultExists(int id)
+        {
+            return _context.TestResults.Any(e => e.TestResultId == id);
         }
         public void populateStatusDropList(object selectedStatus = null)
         {
