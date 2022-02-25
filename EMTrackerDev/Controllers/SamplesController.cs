@@ -37,10 +37,21 @@ namespace EMTrackerDev.Controllers
             var eMTrackerDevContext = _context.Samples.Where(s => s.StatusId == 3).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
             return View(await eMTrackerDevContext.ToListAsync());
         }
-        public async Task<IActionResult> Approved()
+        public async Task<IActionResult> Completed()
         {
-            var eMTrackerDevContext = _context.TestResults.Where(s => s.EnteredById != null);
-            List<int> Ids = eMTrackerDevContext.Select(o => o.TestId).ToList();
+            List<TestResult> testResults = _context.TestResults.Where(s => s.EnteredById != null).ToList();
+            List<int> testIds = testResults.Select(o => o.TestId).ToList();
+
+            List<Test> tests = new List<Test>();
+            for(int i = 0; i < testIds.Count(); i++)
+            {
+                tests.Add(_context.Tests.Find(testIds[i]));
+            }
+            List<int> Ids = new List<int>();
+            for(int i=0; i < tests.Count(); i++)
+            {
+                Ids.Add((int)tests[i].SampleId);
+            }
             var samples = _context.Samples.Where(c => Ids.Contains(c.SampleID)).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
          //   var eMTrackerDevContext2 = _context.Samples.Where(s => s.StatusId == 4).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
             return View(await samples.ToListAsync());
@@ -299,21 +310,30 @@ namespace EMTrackerDev.Controllers
                 try
                 {
                     _context.Update(testResult);
-                    var test = _context.Tests.Find((int)testResult.TestId);
-                    var sample = _context.Samples.Find((int)test.SampleId);
-                    var eMTrackerDevContext = _context.TestResults.Where(s => s.EnteredById != null);
-                    List<int> Ids = eMTrackerDevContext.Select(o => o.TestId).ToList();
-                    List<Sample> samples = _context.Samples.Where(c => Ids.Contains(c.SampleID)).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status).ToList();
-                    for(int i=0; i<samples.Count; i++)
+
+                    List<TestResult> testResults = _context.TestResults.Where(s => s.EnteredById != null).ToList();
+                    List<int> testIds = testResults.Select(o => o.TestId).ToList();
+
+                    List<Test> tests = new List<Test>();
+                    for (int i = 0; i < testIds.Count(); i++)
                     {
-                        if (sample.SampleID == samples[i].SampleID)
-                        {
-                            sample.StatusId = 4;
-                        }
+                        tests.Add(_context.Tests.Find(testIds[i]));
                     }
-
-                    _context.Update(sample);
-
+                    List<int> Ids = new List<int>();
+                    for (int i = 0; i < tests.Count(); i++)
+                    {
+                        Ids.Add((int)tests[i].SampleId);
+                    }
+                    List<Sample> samples = new List<Sample>();
+                    for (int i = 0; i < testIds.Count(); i++)
+                    {
+                        samples.Add(_context.Samples.Find(Ids[i]));
+                    }
+                    for (int i = 0; i < samples.Count(); i++)
+                    {
+                        samples[i].StatusId = 4;
+                        _context.Update(samples[i]);
+                    }
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -364,6 +384,11 @@ namespace EMTrackerDev.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var sample = await _context.Samples.FindAsync(id);
+            List<Test> tests =  _context.Tests.Where(t => t.SampleId == sample.SampleID).ToList();
+            for(int i = 0; i < tests.Count; i++)
+            {
+                _context.Tests.Remove(tests[i]);
+            }
             _context.Samples.Remove(sample);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

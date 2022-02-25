@@ -85,7 +85,7 @@
                 @Html.DisplayFor(modelItem => item.Analysis.Name)
             </td>
             <td>
-               @Html.ActionLink("Update This Post >>", "Edit", new { id= item.SampleID });
+               @Html.ActionLink("Edit", "Edit", new { id= item.SampleID });
  <a asp-action="Details" asp-route-id="@item.SampleID">Details</a>
                 <a asp-action="Delete" asp-route-id="@item.SampleID">Delete</a>
                 <a asp-action="Tests" asp-route-id="@item.SampleID">Tests</a>
