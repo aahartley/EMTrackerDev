@@ -14,7 +14,6 @@ namespace EMTrackerDev.Controllers
     public class SamplesController : Controller
     {
         private readonly EMTrackerDevContext _context;
-        private Sample sam;
 
         public SamplesController(EMTrackerDevContext context)
         {
@@ -39,22 +38,27 @@ namespace EMTrackerDev.Controllers
         }
         public async Task<IActionResult> Completed()
         {
-            List<TestResult> testResults = _context.TestResults.Where(s => s.EnteredById != null).ToList();
-            List<int> testIds = testResults.Select(o => o.TestId).ToList();
+          //  List<TestResult> testResults = _context.TestResults.Where(s => s.EnteredById != null).ToList();
+          //  List<int> testIds = testResults.Select(o => o.TestId).ToList();
 
-            List<Test> tests = new List<Test>();
-            for(int i = 0; i < testIds.Count(); i++)
-            {
-                tests.Add(_context.Tests.Find(testIds[i]));
-            }
-            List<int> Ids = new List<int>();
-            for(int i=0; i < tests.Count(); i++)
-            {
-                Ids.Add((int)tests[i].SampleId);
-            }
-            var samples = _context.Samples.Where(c => Ids.Contains(c.SampleID)).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
-         //   var eMTrackerDevContext2 = _context.Samples.Where(s => s.StatusId == 4).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
-            return View(await samples.ToListAsync());
+         //   List<Test> tests = new List<Test>();
+         //   for(int i = 0; i < testIds.Count(); i++)
+         //   {
+         //       tests.Add(_context.Tests.Find(testIds[i]));
+         //   }
+         //   List<int> Ids = new List<int>();
+         //   for(int i=0; i < tests.Count(); i++)
+         //   {
+          //      Ids.Add((int)tests[i].SampleId);
+          //  }
+          //  var samples = _context.Samples.Where(c => Ids.Contains(c.SampleID)).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
+            var eMTrackerDevContext2 = _context.Samples.Where(s => s.StatusId == 4).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
+            return View(await eMTrackerDevContext2.ToListAsync());
+        }
+        public async Task<IActionResult> Approved()
+        {
+            var eMTrackerDevContext = _context.Samples.Where(s => s.StatusId == 5).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
+            return View(await eMTrackerDevContext.ToListAsync());
         }
         // GET: Samples/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -189,7 +193,7 @@ namespace EMTrackerDev.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, int analid, int loc, [Bind("SampleID,AnalysisId,StatusId,CollectedById,ApprovedById,LocationCodeId,AnalysisResultId,CollectedDate,ApprovedDate,amount,latitude,longitude")] Sample sample)
+        public async Task<IActionResult> Edit(int id, [Bind("SampleID,AnalysisId,StatusId,CollectedById,ApprovedById,LocationCodeId,AnalysisResultId,CollectedDate,ApprovedDate,amount,latitude,longitude")] Sample sample)
         {
             if (id != sample.SampleID)
             {
@@ -355,7 +359,63 @@ namespace EMTrackerDev.Controllers
 
             return View(testResult);
         }
-        
+        // GET: Samples/Edit/5
+        public async Task<IActionResult> Edit_Completed(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var sample = await _context.Samples.FindAsync(id);
+            if (sample == null)
+            {
+                return NotFound();
+            }
+            ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.ApprovedById);
+            ViewData["CollectedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.CollectedById);
+            //ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", sample.Status.StatusId);
+            populateStatusDropList();
+            return View(sample);
+        }
+        // POST: Samples/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit_Completed(int id, [Bind("SampleID,AnalysisId,StatusId,CollectedById,ApprovedById,LocationCodeId,AnalysisResultId,CollectedDate,ApprovedDate,amount,latitude,longitude")] Sample sample)
+        {
+            if (id != sample.SampleID)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+           
+                    _context.Update(sample);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!SampleExists(sample.SampleID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.ApprovedById);
+            ViewData["CollectedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.CollectedById);
+            ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", sample.StatusId);
+            return View(sample);
+        }
 
         // GET: Samples/Delete/5
         public async Task<IActionResult> Delete(int? id)
