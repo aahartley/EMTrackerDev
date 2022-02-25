@@ -8,7 +8,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - EMTrackerDevHome</title>
     <script src="https://kit.fontawesome.com/dcfe4a17db.js" crossorigin="anonymous"></script>
-
+    <style>
+        .row-cols-sm-4 {
+            width: 200px;
+            height: 100px;
+            text-align: center;
+            display: inline-block;
+            font-size: 16px;
+            border: none;
+        }
+        .fa-truck {
+            width: 100px;
+            height: 100px;
+        }
+        .fa-plus {
+            width: 100px;
+            height: 100px;
+        }
+        .fa-vials {
+            width: 100px;
+            height: 100px;
+        }
+        .fa-file-alt {
+            width: 100px;
+            height: 100px;
+        }
+        .fa-user-check {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
 </head>
 <body>
     <div class="text-center">
@@ -22,16 +51,17 @@
 
                   <div class="row-cols-sm-4">
                       <strong>Create</strong>
-                      <button>
+                      <button id = "create">
                           
                           <!-- solid style -->
-                          <<i class="fas fa-plus"></i>
+                          <i class="fas fa-plus"></i>
                       </button>
 
                   </div>
                   <div class="row-cols-sm-4">
                       <strong>Collect</strong>
-                      <button>
+                      <button id = "collect">
+                          
                           <!-- solid style -->
                           <i class="fas fa-truck"></i>
                       </button>
@@ -39,22 +69,25 @@
                   <div class="row-cols-sm-4">
                       <strong>Analyze</strong>
                       <!-- solid style -->
-                      <button>
+                      <button id = "analyze">
+                          
                           <i class="fas fa-vials"></i>
                       </button>
 
                   </div>
                   <div class="row-cols-sm-4">
-                      <strong>Enter Results</strong>
+                      <strong>Results</strong>
                       <!-- solid style -->
-                      <button>
+                      <button id = "results">
+                         
                           <i class="fas fa-file-alt"></i>
                       </button>
                   </div>
                   <div class="row-cols-sm-4">
                       <strong>Approve</strong>
                       <!-- solid style -->
-                      <button>
+                      <button id = "approve">
+                         
                           <i class="fas fa-user-check"></i>
                       </button>
                   </div>
@@ -67,13 +100,28 @@
 </body>
 </html>
 <script>
-    $("#sampleBtn").click(function () {
+    $("#create").click(function () {
         window.location.href = '@Url.Action("Create", "Samples")';
 
     });
-     $("#sampleBtn1").click(function () {
-        window.location.href = '@Url.Action("Index", "Samples")';
+     $("#collect").click(function () {
+         window.location.href = '@Url.Action("Index", "Samples")';
+
+
+     });
+        $("#analyze").click(function () {
+        window.location.href = '@Url.Action("Create", "Analyses")';
 
     });
+     $("#results").click(function () {
+         window.location.href = '@Url.Action("Create", "Results")';
+
+
+     });
+        $("#approve").click(function () {
+        window.location.href = '@Url.Action("Approved", "Samples")';
+
+    });
+
 
 </script>
