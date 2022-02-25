@@ -25,7 +25,7 @@ namespace EMTrackerDev.Data
 
                         };
                         stats.ForEach(s => context.Statuses.Add(s));
-         //   context.SaveChanges();
+           // context.SaveChanges();
 
             var analyses = new List<Analysis>
                  {
@@ -35,7 +35,7 @@ namespace EMTrackerDev.Data
                  };
                  analyses.ForEach(a => context.Analyses.Add(a));
 
-          //  context.SaveChanges();
+           // context.SaveChanges();
 
 
             var analysisResults = new List<AnalysisResult>
@@ -45,7 +45,7 @@ namespace EMTrackerDev.Data
 
                  };
                  analysisResults.ForEach(ar => context.AnalysisResults.Add(ar));
-          //   context.SaveChanges();
+            // context.SaveChanges();
 
 
    
@@ -57,7 +57,7 @@ namespace EMTrackerDev.Data
                 new UserRole{Role="Manager"}
             };
             userRoles.ForEach(s => context.UserRoles.Add(s));
-         //    context.SaveChanges();
+           //  context.SaveChanges();
             var users = new List<User>
             {
                 new User{ UserRoleId=1,UserName="name",Password="password",FirstName="first",LastName="last"},
@@ -65,7 +65,15 @@ namespace EMTrackerDev.Data
 
             };
             users.ForEach(s => context.Users.Add(s));
-        //     context.SaveChanges();
+          //   context.SaveChanges();
+            var locations = new List<LocationCode>
+                        {
+                            new LocationCode{LocationId="Mtn",Description="desc"}
+                  
+
+                        };
+            locations.ForEach(s => context.Locationcodes.Add(s));
+            //context.SaveChanges();
         }
     }
 }

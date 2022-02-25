@@ -13,9 +13,6 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.AnalysisReportId)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.StartDate)
             </th>
             <th>
@@ -23,6 +20,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EnteredBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnalysisResult)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Test)
@@ -34,9 +34,6 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.AnalysisReportId)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.StartDate)
             </td>
             <td>
@@ -44,6 +41,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EnteredBy.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnalysisResult.AnalysisResultId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Test.TestID)

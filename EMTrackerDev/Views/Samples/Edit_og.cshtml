@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit_og">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="SampleID" />
             <div class="form-group">
@@ -31,9 +31,9 @@
                 <span asp-validation-for="ApprovedById" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LocatedCodeId" class="control-label"></label>
-                <input asp-for="LocatedCodeId" class="form-control" />
-                <span asp-validation-for="LocatedCodeId" class="text-danger"></span>
+                <label asp-for="LocationCodeId" class="control-label"></label>
+                <input asp-for="LocationCodeId" class="form-control" />
+                <span asp-validation-for="LocationCodeId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CollectedDate" class="control-label"></label>

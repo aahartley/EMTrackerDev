@@ -22,7 +22,7 @@ namespace EMTrackerDev.Controllers
         // GET: TestResults
         public async Task<IActionResult> Index()
         {
-            var eMTrackerDevContext = _context.TestResults.Include(t => t.EnteredBy).Include(t => t.Test);
+            var eMTrackerDevContext = _context.TestResults.Include(t => t.AnalysisResult).Include(t => t.EnteredBy).Include(t => t.Test);
             return View(await eMTrackerDevContext.ToListAsync());
         }
 
@@ -35,6 +35,7 @@ namespace EMTrackerDev.Controllers
             }
 
             var testResult = await _context.TestResults
+                .Include(t => t.AnalysisResult)
                 .Include(t => t.EnteredBy)
                 .Include(t => t.Test)
                 .FirstOrDefaultAsync(m => m.TestResultId == id);
@@ -49,6 +50,7 @@ namespace EMTrackerDev.Controllers
         // GET: TestResults/Create
         public IActionResult Create()
         {
+            ViewData["AnalysisResultId"] = new SelectList(_context.AnalysisResults, "AnalysisResultId", "AnalysisResultId");
             ViewData["EnteredById"] = new SelectList(_context.Users, "UserId", "UserId");
             ViewData["TestId"] = new SelectList(_context.Tests, "TestID", "TestID");
             return View();
@@ -59,7 +61,7 @@ namespace EMTrackerDev.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TestResultId,AnalysisReportId,EnteredById,StartDate,EndDate,TestId")] TestResult testResult)
+        public async Task<IActionResult> Create([Bind("TestResultId,AnalysisResultId,EnteredById,StartDate,EndDate,TestId")] TestResult testResult)
         {
             if (ModelState.IsValid)
             {
@@ -67,6 +69,7 @@ namespace EMTrackerDev.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AnalysisResultId"] = new SelectList(_context.AnalysisResults, "AnalysisResultId", "AnalysisResultId", testResult.AnalysisResultId);
             ViewData["EnteredById"] = new SelectList(_context.Users, "UserId", "UserId", testResult.EnteredById);
             ViewData["TestId"] = new SelectList(_context.Tests, "TestID", "TestID", testResult.TestId);
             return View(testResult);
@@ -85,6 +88,7 @@ namespace EMTrackerDev.Controllers
             {
                 return NotFound();
             }
+            ViewData["AnalysisResultId"] = new SelectList(_context.AnalysisResults, "AnalysisResultId", "AnalysisResultId", testResult.AnalysisResultId);
             ViewData["EnteredById"] = new SelectList(_context.Users, "UserId", "UserId", testResult.EnteredById);
             ViewData["TestId"] = new SelectList(_context.Tests, "TestID", "TestID", testResult.TestId);
             return View(testResult);
@@ -95,7 +99,7 @@ namespace EMTrackerDev.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TestResultId,AnalysisReportId,EnteredById,StartDate,EndDate,TestId")] TestResult testResult)
+        public async Task<IActionResult> Edit(int id, [Bind("TestResultId,AnalysisResultId,EnteredById,StartDate,EndDate,TestId")] TestResult testResult)
         {
             if (id != testResult.TestResultId)
             {
@@ -122,6 +126,7 @@ namespace EMTrackerDev.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["AnalysisResultId"] = new SelectList(_context.AnalysisResults, "AnalysisResultId", "AnalysisResultId", testResult.AnalysisResultId);
             ViewData["EnteredById"] = new SelectList(_context.Users, "UserId", "UserId", testResult.EnteredById);
             ViewData["TestId"] = new SelectList(_context.Tests, "TestID", "TestID", testResult.TestId);
             return View(testResult);
@@ -136,6 +141,7 @@ namespace EMTrackerDev.Controllers
             }
 
             var testResult = await _context.TestResults
+                .Include(t => t.AnalysisResult)
                 .Include(t => t.EnteredBy)
                 .Include(t => t.Test)
                 .FirstOrDefaultAsync(m => m.TestResultId == id);

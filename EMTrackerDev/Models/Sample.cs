@@ -16,7 +16,7 @@ namespace EMTrackerDev.Models
         public int StatusId { get; set; }
         public int? CollectedById { get; set; }
         public int? ApprovedById { get; set; }
-        public int LocatedCodeId { get; set; }
+        public int LocationCodeId { get; set; }
 
         public DateTime CollectedDate { get; set; }
         public DateTime ApprovedDate { get; set; }
