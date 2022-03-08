@@ -61,7 +61,7 @@ namespace EMTrackerDev.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TestResultId,AnalysisResultId,EnteredById,StartDate,EndDate,TestId")] TestResult testResult)
+        public async Task<IActionResult> Create([Bind("TestResultId,AnalysisResultId,EnteredById,amount,StartDate,EndDate,TestId")] TestResult testResult)
         {
             if (ModelState.IsValid)
             {
@@ -99,7 +99,7 @@ namespace EMTrackerDev.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TestResultId,AnalysisResultId,EnteredById,StartDate,EndDate,TestId")] TestResult testResult)
+        public async Task<IActionResult> Edit(int id, [Bind("TestResultId,AnalysisResultId,EnteredById,amount,StartDate,EndDate,TestId")] TestResult testResult)
         {
             if (id != testResult.TestResultId)
             {

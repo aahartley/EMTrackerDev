@@ -18,8 +18,8 @@ namespace EMTrackerDev.Models
         public int? ApprovedById { get; set; }
         public int LocationCodeId { get; set; }
 
-        public DateTime CollectedDate { get; set; }
-        public DateTime ApprovedDate { get; set; }
+        public DateTime? CollectedDate { get; set; }
+        public DateTime? ApprovedDate { get; set; }
         public int? AnalysisId { get; set; }
         public double amount { get; set; }
         public string latitude { get; set; }

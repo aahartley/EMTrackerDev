@@ -60,6 +60,11 @@ namespace EMTrackerDev.Controllers
             var eMTrackerDevContext = _context.Samples.Where(s => s.StatusId == 5).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
             return View(await eMTrackerDevContext.ToListAsync());
         }
+        public async Task<IActionResult> Rejected()
+        {
+            var eMTrackerDevContext = _context.Samples.Where(s => s.StatusId == 6).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
+            return View(await eMTrackerDevContext.ToListAsync());
+        }
         // GET: Samples/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -302,7 +307,7 @@ namespace EMTrackerDev.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit_TestResults(int id,[Bind("TestResultId,AnalysisResultId,EnteredById,StartDate,EndDate,TestId")] TestResult testResult)
+        public async Task<IActionResult> Edit_TestResults(int id,[Bind("TestResultId,AnalysisResultId,EnteredById,StartDate,amount,EndDate,TestId")] TestResult testResult)
         {
             if (id != testResult.TestResultId)
             {

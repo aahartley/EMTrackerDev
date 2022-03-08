@@ -9,8 +9,10 @@ namespace EMTrackerDev.Models
 
         public int AnalysisResultId { get; set; }
         public int? EnteredById { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+
+        public float amount { get; set; }
         public virtual User EnteredBy { get; set; }
 
         public virtual AnalysisResult AnalysisResult{get; set;}
