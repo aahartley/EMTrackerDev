@@ -12,7 +12,7 @@ namespace EMTrackerDev.Models
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
 
-        public float amount { get; set; }
+        public float? amount { get; set; }
         public virtual User EnteredBy { get; set; }
 
         public virtual AnalysisResult AnalysisResult{get; set;}

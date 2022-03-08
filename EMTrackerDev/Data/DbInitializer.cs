@@ -21,7 +21,9 @@ namespace EMTrackerDev.Data
                             new Status{StatusName="Collected"},
                             new Status{StatusName="In-Process"},
                             new Status{StatusName="Complete"},
-                            new Status{StatusName="Approved"}
+                            new Status{StatusName="Approved"},
+                            new Status{StatusName="Rejected"}
+
 
                         };
                         stats.ForEach(s => context.Statuses.Add(s));
@@ -35,7 +37,7 @@ namespace EMTrackerDev.Data
                  };
                  analyses.ForEach(a => context.Analyses.Add(a));
 
-           // context.SaveChanges();
+          //  context.SaveChanges();
 
 
             var analysisResults = new List<AnalysisResult>
@@ -65,7 +67,7 @@ namespace EMTrackerDev.Data
 
             };
             users.ForEach(s => context.Users.Add(s));
-          //   context.SaveChanges();
+           //  context.SaveChanges();
             var locations = new List<LocationCode>
                         {
                             new LocationCode{LocationId="Mtn",Description="desc"}
@@ -73,7 +75,7 @@ namespace EMTrackerDev.Data
 
                         };
             locations.ForEach(s => context.Locationcodes.Add(s));
-            //context.SaveChanges();
+           // context.SaveChanges();
         }
     }
 }

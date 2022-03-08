@@ -213,6 +213,8 @@ namespace EMTrackerDev.Controllers
                   //  sample.AnalysisId = analid;
                     sample.StatusId = 2;
                     Console.WriteLine("AMT " + sample.amount);
+                    sample.CollectedById = 1;
+                    sample.CollectedDate = DateTime.Now;
                     _context.Update(sample);
                     await _context.SaveChangesAsync();
                 }
@@ -267,6 +269,16 @@ namespace EMTrackerDev.Controllers
                 {
                     sample.StatusId = 3;
                     _context.Update(sample);
+                    List<Test> tests = _context.Tests.Where(s => s.SampleId==id).ToList();
+                    List<int> Ids = tests.Select(o => o.TestID).ToList();
+
+                    var testResults = _context.TestResults.Where(c => Ids.Contains(c.TestId)).Include(c => c.AnalysisResult).Include(c => c.Test).Include(c => c.EnteredBy).ToList();
+                    for (int i=0; i<testResults.Count(); i++)
+                    {
+                        testResults[i].StartDate = DateTime.Now;
+                        _context.Update(testResults[i]);
+                    }
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -320,7 +332,7 @@ namespace EMTrackerDev.Controllers
                 {
                     _context.Update(testResult);
 
-                    List<TestResult> testResults = _context.TestResults.Where(s => s.EnteredById != null).ToList();
+                    List<TestResult> testResults = _context.TestResults.Where(s => s.amount >0).ToList();
                     List<int> testIds = testResults.Select(o => o.TestId).ToList();
 
                     List<Test> tests = new List<Test>();
@@ -399,7 +411,8 @@ namespace EMTrackerDev.Controllers
             {
                 try
                 {
-           
+                    sample.ApprovedById = 1;
+                    sample.ApprovedDate = DateTime.Now;
                     _context.Update(sample);
                     await _context.SaveChangesAsync();
                 }
@@ -418,7 +431,8 @@ namespace EMTrackerDev.Controllers
             }
             ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.ApprovedById);
             ViewData["CollectedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.CollectedById);
-            ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", sample.StatusId);
+            // ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", sample.StatusId);
+            populateStatusDropList();
             return View(sample);
         }
 
@@ -469,7 +483,7 @@ namespace EMTrackerDev.Controllers
         public void populateStatusDropList(object selectedStatus = null)
         {
             var statusQuery = from q in _context.Statuses
-                              orderby q.StatusId
+                              where q.StatusId >=5
                               select q;
             ViewBag.StatusId = new SelectList(statusQuery, "StatusId", "StatusName", selectedStatus);
         }
