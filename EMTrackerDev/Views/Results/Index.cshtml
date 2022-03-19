@@ -33,3 +33,7 @@
 }
     </tbody>
 </table>
+@using (Html.BeginForm("Export", "Results", FormMethod.Post))
+    {
+        <input type="submit" value="Export"/>
+    }

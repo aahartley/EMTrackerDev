@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using EMTrackerDev.Data;
 using EMTrackerDev.Models;
 using Microsoft.EntityFrameworkCore.Internal;
+using ClosedXML.Excel;
+using System.Data;
+using System.IO;
 
 namespace EMTrackerDev.Controllers
 {
@@ -480,6 +483,7 @@ namespace EMTrackerDev.Controllers
         {
             return _context.TestResults.Any(e => e.TestResultId == id);
         }
+     
         public void populateStatusDropList(object selectedStatus = null)
         {
             var statusQuery = from q in _context.Statuses
@@ -487,5 +491,7 @@ namespace EMTrackerDev.Controllers
                               select q;
             ViewBag.StatusId = new SelectList(statusQuery, "StatusId", "StatusName", selectedStatus);
         }
+       
     }
 }
+
