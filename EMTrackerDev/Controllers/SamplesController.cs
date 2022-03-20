@@ -24,8 +24,10 @@ namespace EMTrackerDev.Controllers
         }
 
         // GET: Samples
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int userId)
         {
+            ViewBag.UserId = userId;
+            Console.WriteLine("LOOKHERE6 "+userId);
             var eMTrackerDevContext = _context.Samples.Where(s => s.StatusId == 1).Include(s=>s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status).Include(s=>s.LocationCode);
             return View(await eMTrackerDevContext.ToListAsync());
         }
@@ -34,27 +36,31 @@ namespace EMTrackerDev.Controllers
             var eMTrackerDevContext = _context.Samples.Where(s=> s.StatusId == 2).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status).Include(s => s.LocationCode);
             return View(await eMTrackerDevContext.ToListAsync());
         }
-        public async Task<IActionResult> InProcess()
+        public async Task<IActionResult> InProcess(int userId)
         {
+            ViewBag.UserId = userId;
+
             var eMTrackerDevContext = _context.Samples.Where(s => s.StatusId == 3).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status).Include(s => s.LocationCode);
             return View(await eMTrackerDevContext.ToListAsync());
         }
-        public async Task<IActionResult> Completed()
+        public async Task<IActionResult> Completed(int userId)
         {
-          //  List<TestResult> testResults = _context.TestResults.Where(s => s.EnteredById != null).ToList();
-          //  List<int> testIds = testResults.Select(o => o.TestId).ToList();
+            ViewBag.UserId = userId;
 
-         //   List<Test> tests = new List<Test>();
-         //   for(int i = 0; i < testIds.Count(); i++)
-         //   {
-         //       tests.Add(_context.Tests.Find(testIds[i]));
-         //   }
-         //   List<int> Ids = new List<int>();
-         //   for(int i=0; i < tests.Count(); i++)
-         //   {
-          //      Ids.Add((int)tests[i].SampleId);
-          //  }
-          //  var samples = _context.Samples.Where(c => Ids.Contains(c.SampleID)).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
+            //  List<TestResult> testResults = _context.TestResults.Where(s => s.EnteredById != null).ToList();
+            //  List<int> testIds = testResults.Select(o => o.TestId).ToList();
+
+            //   List<Test> tests = new List<Test>();
+            //   for(int i = 0; i < testIds.Count(); i++)
+            //   {
+            //       tests.Add(_context.Tests.Find(testIds[i]));
+            //   }
+            //   List<int> Ids = new List<int>();
+            //   for(int i=0; i < tests.Count(); i++)
+            //   {
+            //      Ids.Add((int)tests[i].SampleId);
+            //  }
+            //  var samples = _context.Samples.Where(c => Ids.Contains(c.SampleID)).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
             var eMTrackerDevContext2 = _context.Samples.Where(s => s.StatusId == 4).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status).Include(s => s.LocationCode);
             return View(await eMTrackerDevContext2.ToListAsync());
         }
@@ -152,7 +158,7 @@ namespace EMTrackerDev.Controllers
         }
     
         // GET: Samples/Tests/5
-        public async Task<IActionResult> Tests(int? id)
+        public async Task<IActionResult> Tests(int? id, int userId)
         {
 
             /*   var eMTrackerDevContext = await (from b in _context.Samples
@@ -177,20 +183,24 @@ namespace EMTrackerDev.Controllers
             List<int> Ids = eMTrackerDevContext.Select(o => o.TestID).ToList();
             var testResults = _context.TestResults.Where(c => Ids.Contains(c.TestId)).Include(c=> c.AnalysisResult).Include(c=>c.Test).Include(c=>c.EnteredBy);
             ViewBag.Id = id ;
+            ViewBag.UserId = userId;
             return View(await testResults.ToListAsync());
 
         }
 
 
         // GET: Samples/Edit/5                         //add validation
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, int userId)
         {
+            Console.WriteLine("EDIT5 " + userId);
             if (id == null)
             {
                 return NotFound();
             }
 
             var sample = await _context.Samples.FindAsync(id);
+            sample.CollectedById = userId;
+            _context.Update(sample);
             if (sample == null)
             {
                 return NotFound();
@@ -208,7 +218,7 @@ namespace EMTrackerDev.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SampleID,AnalysisId,StatusId,CollectedById,ApprovedById,LocationCodeId,AnalysisResultId,CollectedDate,ApprovedDate,amount,latitude,longitude")] Sample sample)
+        public async Task<IActionResult> Edit(int id,int userId, [Bind("SampleID,AnalysisId,StatusId,CollectedById,ApprovedById,LocationCodeId,AnalysisResultId,CollectedDate,ApprovedDate,amount,latitude,longitude")] Sample sample)
         {
             if (id != sample.SampleID)
             {
@@ -219,7 +229,8 @@ namespace EMTrackerDev.Controllers
             {
                 try
                 {
-      
+                    Console.WriteLine("POSTEDIT5 " + userId);
+
                     sample.StatusId = 2;
                     Console.WriteLine("AMT " + sample.amount);
                     sample.CollectedById = 1;
@@ -314,7 +325,7 @@ namespace EMTrackerDev.Controllers
             // ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", sample.StatusId);
             return View(sample);
         }
-        public async Task<IActionResult> Edit_TestResults(int? id)
+        public async Task<IActionResult> Edit_TestResults(int? id, int userId)
         {
             if (id == null)
             {
@@ -334,7 +345,7 @@ namespace EMTrackerDev.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit_TestResults(int id,[Bind("TestResultId,AnalysisResultId,EnteredById,StartDate,amount,EndDate,TestId")] TestResult testResult)
+        public async Task<IActionResult> Edit_TestResults(int id, int userId,[Bind("TestResultId,AnalysisResultId,EnteredById,StartDate,amount,EndDate,TestId")] TestResult testResult)
         {
             if (id != testResult.TestResultId)
             {
@@ -394,7 +405,7 @@ namespace EMTrackerDev.Controllers
             return View(testResult);
         }
         // GET: Samples/Edit/5
-        public async Task<IActionResult> Edit_Completed(int? id)
+        public async Task<IActionResult> Edit_Completed(int? id, int userId)
         {
             if (id == null)
             {
@@ -418,7 +429,7 @@ namespace EMTrackerDev.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit_Completed(int id, [Bind("SampleID,AnalysisId,StatusId,CollectedById,ApprovedById,LocationCodeId,AnalysisResultId,CollectedDate,ApprovedDate,amount,latitude,longitude")] Sample sample)
+        public async Task<IActionResult> Edit_Completed(int id, int userId, [Bind("SampleID,AnalysisId,StatusId,CollectedById,ApprovedById,LocationCodeId,AnalysisResultId,CollectedDate,ApprovedDate,amount,latitude,longitude")] Sample sample)
         {
             if (id != sample.SampleID)
             {

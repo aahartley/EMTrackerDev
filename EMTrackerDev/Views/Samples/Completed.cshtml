@@ -84,7 +84,9 @@
                     @Html.DisplayFor(modelItem => item.Analysis.Name)
                 </td>
                 <td>
-                    <a asp-action="Edit_Completed" asp-route-id="@item.SampleID">Approve or Disapprove</a>
+                 <!--   <a asp-action="Edit_Completed" asp-route-id="@item.SampleID">Approve or Disapprove</a>-->
+                 @Html.ActionLink("Edit_Completed", "Edit_Completed", new { id= item.SampleID,userId= @ViewBag.UserId})
+
                     <!--<a asp-action="Details" asp-route-id="@item.SampleID">Details</a>-->
                     <!--<a asp-action="Delete" asp-route-id="@item.SampleID">Delete</a>-->
                     <a asp-action="Tests" asp-route-id="@item.SampleID">Tests</a>

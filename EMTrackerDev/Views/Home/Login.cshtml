@@ -22,13 +22,13 @@
 </head>
 
 <body class="text-center">
-    <form class="form-signin">
+<form id="myForm" action="/Home/Login" method="Post">
         <img class="mb-4" src="~/imgs/srslogo.png" alt="" width="305" height="180">
         <h1 class="h3 mb-3 font-weight-normal" style="color:white;">Please sign in</h1>
         <label for="inputEmpID" class="sr-only">Employee ID</label>
-        <input type="text" id="inputEmpID" class="form-control" placeholder="Employee ID" required autofocus>
+        <input type="text" name="u"id="inputEmpID" class="form-control" placeholder="Employee ID" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <input type="password" name="p"id="inputPassword" class="form-control" placeholder="Password" required>
         <div class="checkbox mb-3">
             <label style="color:white;">
                 <input  type="checkbox" value="remember-me"> Remember me
@@ -41,8 +41,8 @@
 </html>
 <script>
     $("#submitBt").click(function (e) {
-        e.preventDefault();
-        window.location.href = '@Url.Action("Index", "Home")';
+       // e.preventDefault();
+       // window.location.href = '@Url.Action("Index", "Home")';
         
     });
 </script>

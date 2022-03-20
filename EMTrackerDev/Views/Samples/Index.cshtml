@@ -9,6 +9,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
 <table id="table" class="table table-striped table-bordered table-sm" width="100%">
     <thead>
         <tr>
@@ -85,7 +86,7 @@
                 @Html.DisplayFor(modelItem => item.Analysis.Name)
             </td>
             <td>
-               @Html.ActionLink("Edit", "Edit", new { id= item.SampleID })
+               @Html.ActionLink("Edit", "Edit", new { id= item.SampleID,userId= @ViewBag.UserId})
  <!--<a asp-action="Details" asp-route-id="@item.SampleID">Details</a>-->
                 <a asp-action="Delete" asp-route-id="@item.SampleID">Delete</a>
            <!--     <a asp-action="Tests" asp-route-id="@item.SampleID">Tests</a>-->

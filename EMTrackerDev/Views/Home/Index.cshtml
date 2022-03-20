@@ -105,7 +105,7 @@
 
     });
      $("#collect").click(function () {
-         window.location.href = '@Url.Action("Index", "Samples")';
+         window.location.href = '@Url.Action("Index", "Samples",new{userId=@ViewBag.userID})';
 
 
      });
@@ -114,12 +114,12 @@
 
     });
      $("#results").click(function () {
-         window.location.href = '@Url.Action("InProcess", "Samples")';
+         window.location.href = '@Url.Action("InProcess", "Samples",new{userId=@ViewBag.userID})';
 
 
      });
         $("#approve").click(function () {
-        window.location.href = '@Url.Action("Completed", "Samples")';
+        window.location.href = '@Url.Action("Completed", "Samples",new{userId=@ViewBag.userID})';
 
     });
 

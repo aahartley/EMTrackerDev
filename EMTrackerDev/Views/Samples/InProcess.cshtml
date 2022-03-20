@@ -87,7 +87,9 @@
                     <!--<a asp-action="Edit_TestResults" asp-route-id="@item.SampleID">Edit</a> -->
                     <!--<a asp-action="Details" asp-route-id="@item.SampleID">Details</a>-->
                    <!-- <a asp-action="Delete" asp-route-id="@item.SampleID">Delete</a>-->
-                    <a asp-action="Tests" asp-route-id="@item.SampleID">Edit Tests</a>
+                  <!--  <a asp-action="Tests" asp-route-id="@item.SampleID">Edit Tests</a> -->
+                     @Html.ActionLink("Tests", "Tests", new { id= item.SampleID,userId= @ViewBag.UserId})
+
 
 
                 </td>
