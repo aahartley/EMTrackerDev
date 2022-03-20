@@ -16,39 +16,38 @@
         <form asp-action="Edit_Collected">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="SampleID" />
-             <div class="form-group">
+            <div class="form-group">
                 <label asp-for="CollectedById" class="control-label"></label>
-                <select asp-for="CollectedById" class="form-control" asp-items="ViewBag.CollectedById"></select>
-                <span asp-validation-for="CollectedById" class="text-danger"></span>
+                <select asp-for="CollectedById" class="form-control" asp-items="ViewBag.CollectedById" readonly></select>
+                 <span asp-validation-for="CollectedById" class="text-danger"></span>
+
             </div>
             <div class="form-group">
                 <label asp-for="CollectedDate" class="control-label"></label>
-                <input asp-for="CollectedDate" class="form-control" />
+                <input asp-for="CollectedDate" class="form-control" readonly />
                 <span asp-validation-for="CollectedDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="amount" class="control-label"></label>
-                <input asp-for="amount" class="form-control" />
+                <input asp-for="amount" class="form-control" readonly/>
                 <span asp-validation-for="amount" class="text-danger"></span>
+            </div>
+               <div class="form-group">
+                <label asp-for="AnalysisId" class="control-label"></label>
+                <select asp-for="AnalysisId" class="form-control" asp-items="ViewBag.AnalysisId" readonly></select>
             </div>
             <div class="form-group">
                 <label asp-for="LocationCodeId" class="control-label"></label>
-                <input asp-for="LocationCodeId" class="form-control" />
-                <span asp-validation-for="LocationCodeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AnalysisId" class="control-label"></label>
-                <input asp-for="AnalysisId" class="form-control" />
-                <span asp-validation-for="AnalysisId" class="text-danger"></span>
+                <select asp-for="LocationCodeId" class="form-control" asp-items="ViewBag.LocationCodeId" readonly></select>
             </div>
             <div class="form-group">
                 <label asp-for="latitude" class="control-label"></label>
-                <input asp-for="latitude" class="form-control" />
+                <input asp-for="latitude" class="form-control" readonly/>
                 <span asp-validation-for="latitude" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="longitude" class="control-label"></label>
-                <input asp-for="longitude" class="form-control" />
+                <input asp-for="longitude" class="form-control" readonly />
                 <span asp-validation-for="longitude" class="text-danger"></span>
             </div>
             <div class="form-group">

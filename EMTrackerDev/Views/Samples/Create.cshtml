@@ -16,10 +16,9 @@
                 <label asp-for="AnalysisId" class="control-label"></label>
                 <select asp-for="AnalysisId" class="form-control" asp-items="ViewBag.AnalysisId"></select>
             </div>
-            <div class="form-group">
+               <div class="form-group">
                 <label asp-for="LocationCodeId" class="control-label"></label>
-                <input asp-for="LocationCodeId" class="form-control" />
-                <span asp-validation-for="LocationCodeId" class="text-danger"></span>
+                <select asp-for="LocationCodeId" class="form-control" asp-items="ViewBag.LocationCodeId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

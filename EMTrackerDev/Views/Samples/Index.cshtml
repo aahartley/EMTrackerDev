@@ -16,7 +16,7 @@
                 @Html.DisplayNameFor(model => model.SampleID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LocationCodeId)
+                @Html.DisplayNameFor(model => model.LocationCode.LocationId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CollectedDate)
@@ -55,7 +55,7 @@
                 @Html.DisplayFor(modelItem => item.SampleID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LocationCodeId)
+                @Html.DisplayFor(modelItem => item.LocationCode.LocationId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CollectedDate)

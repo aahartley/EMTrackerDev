@@ -26,17 +26,17 @@ namespace EMTrackerDev.Controllers
         // GET: Samples
         public async Task<IActionResult> Index()
         {
-            var eMTrackerDevContext = _context.Samples.Where(s => s.StatusId == 1).Include(s=>s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
+            var eMTrackerDevContext = _context.Samples.Where(s => s.StatusId == 1).Include(s=>s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status).Include(s=>s.LocationCode);
             return View(await eMTrackerDevContext.ToListAsync());
         }
         public async Task<IActionResult> Collected()
         {
-            var eMTrackerDevContext = _context.Samples.Where(s=> s.StatusId == 2).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
+            var eMTrackerDevContext = _context.Samples.Where(s=> s.StatusId == 2).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status).Include(s => s.LocationCode);
             return View(await eMTrackerDevContext.ToListAsync());
         }
         public async Task<IActionResult> InProcess()
         {
-            var eMTrackerDevContext = _context.Samples.Where(s => s.StatusId == 3).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
+            var eMTrackerDevContext = _context.Samples.Where(s => s.StatusId == 3).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status).Include(s => s.LocationCode);
             return View(await eMTrackerDevContext.ToListAsync());
         }
         public async Task<IActionResult> Completed()
@@ -55,17 +55,17 @@ namespace EMTrackerDev.Controllers
           //      Ids.Add((int)tests[i].SampleId);
           //  }
           //  var samples = _context.Samples.Where(c => Ids.Contains(c.SampleID)).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
-            var eMTrackerDevContext2 = _context.Samples.Where(s => s.StatusId == 4).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
+            var eMTrackerDevContext2 = _context.Samples.Where(s => s.StatusId == 4).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status).Include(s => s.LocationCode);
             return View(await eMTrackerDevContext2.ToListAsync());
         }
         public async Task<IActionResult> Approved()
         {
-            var eMTrackerDevContext = _context.Samples.Where(s => s.StatusId == 5).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
+            var eMTrackerDevContext = _context.Samples.Where(s => s.StatusId == 5).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status).Include(s => s.LocationCode);
             return View(await eMTrackerDevContext.ToListAsync());
         }
         public async Task<IActionResult> Rejected()
         {
-            var eMTrackerDevContext = _context.Samples.Where(s => s.StatusId == 6).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status);
+            var eMTrackerDevContext = _context.Samples.Where(s => s.StatusId == 6).Include(s => s.Analysis).Include(s => s.Test).Include(s => s.ApprovedBy).Include(s => s.CollectedBy).Include(s => s.Status).Include(s => s.LocationCode);
             return View(await eMTrackerDevContext.ToListAsync());
         }
         // GET: Samples/Details/5
@@ -93,9 +93,11 @@ namespace EMTrackerDev.Controllers
         public IActionResult Create()
         {
             //ViewData["AnalysisResultId"] = new SelectList(_context.AnalysisResults, "AnalysisResultId", "AnalysisResultId");
-            ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId");
-            ViewData["CollectedById"] = new SelectList(_context.Users, "UserId", "UserId");
-            ViewData["AnalysisId"] = new SelectList(_context.Analyses, "AnalysisId", "AnalysisId");
+         //   ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId");
+          //  ViewData["CollectedById"] = new SelectList(_context.Users, "UserId", "UserId");
+            ViewData["AnalysisId"] = new SelectList(_context.Analyses, "AnalysisId", "Name");
+            ViewData["LocationCodeId"] = new SelectList(_context.Locationcodes, "LocationCodeId", "LocationId");
+
             return View();
         }
 
@@ -139,10 +141,13 @@ namespace EMTrackerDev.Controllers
                 return RedirectToAction(nameof(Index));
             }
           //  ViewData["AnalysisResultId"] = new SelectList(_context.AnalysisResults, "AnalysisResultId", "AnalysisResultId", sample.AnalysisResultId);
-            ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.ApprovedById);
-            ViewData["CollectedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.CollectedById);
-            ViewData["AnalysisId"] = new SelectList(_context.Analyses, "AnalysisId", "AnalysisId", sample.AnalysisId);
-            populateStatusDropList();
+          //  ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.ApprovedById);
+          //  ViewData["CollectedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.CollectedById);
+             ViewData["AnalysisId"] = new SelectList(_context.Analyses, "AnalysisId", "Name", sample.AnalysisId);
+            ViewData["LocationCodeId"] = new SelectList(_context.Locationcodes, "LocationCodeId", "LocationId",sample.LocationCodeId);
+
+            //populateAnalysis();
+            // populateStatusDropList();
             return View(sample);
         }
     
@@ -177,7 +182,7 @@ namespace EMTrackerDev.Controllers
         }
 
 
-        // GET: Samples/Edit/5
+        // GET: Samples/Edit/5                         //add validation
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -190,10 +195,12 @@ namespace EMTrackerDev.Controllers
             {
                 return NotFound();
             }
-            ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.ApprovedById);
-            ViewData["CollectedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.CollectedById);
+         //   ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.ApprovedById);
+        //    ViewData["CollectedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.CollectedById);
+            ViewData["AnalysisId"] = new SelectList(_context.Analyses.Where(s => s.AnalysisId == sample.AnalysisId), "AnalysisId", "Name");
+            ViewData["LocationCodeId"] = new SelectList(_context.Locationcodes.Where(s => s.LocationCodeId == sample.LocationCodeId), "LocationCodeId", "LocationId");
             //ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", sample.Status.StatusId);
-            populateStatusDropList();
+          //  populateStatusDropList();
             return View(sample);
         }
         // POST: Samples/Edit/5
@@ -212,8 +219,7 @@ namespace EMTrackerDev.Controllers
             {
                 try
                 {
-                  //  sample.LocationCodeId = loc;
-                  //  sample.AnalysisId = analid;
+      
                     sample.StatusId = 2;
                     Console.WriteLine("AMT " + sample.amount);
                     sample.CollectedById = 1;
@@ -234,9 +240,11 @@ namespace EMTrackerDev.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.ApprovedById);
-            ViewData["CollectedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.CollectedById);
-            ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", sample.StatusId);
+            // ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.ApprovedById);
+            // ViewData["CollectedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.CollectedById);
+            // ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", sample.StatusId);
+            ViewData["AnalysisId"] = new SelectList(_context.Analyses.Where(s=>s.AnalysisId==sample.AnalysisId), "AnalysisId", "Name",sample.AnalysisId);
+            ViewData["LocationCodeId"] = new SelectList(_context.Locationcodes.Where(s => s.LocationCodeId == sample.LocationCodeId), "LocationCodeId", "LocationId",sample.LocationCodeId);
             return View(sample);
         }
         public async Task<IActionResult> Edit_Collected(int? id)
@@ -251,8 +259,10 @@ namespace EMTrackerDev.Controllers
             {
                 return NotFound();
             }
-            ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.ApprovedById);
-            ViewData["CollectedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.CollectedById);
+          //  ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.ApprovedById);
+            ViewData["CollectedById"] = new SelectList(_context.Users.Where(s => s.UserId == sample.CollectedById), "UserId", "FirstName", sample.CollectedById);
+            ViewData["AnalysisId"] = new SelectList(_context.Analyses.Where(s => s.AnalysisId == sample.AnalysisId), "AnalysisId", "Name", sample.AnalysisId);
+            ViewData["LocationCodeId"] = new SelectList(_context.Locationcodes.Where(s => s.LocationCodeId == sample.LocationCodeId), "LocationCodeId", "LocationId", sample.LocationCodeId);
             //ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", sample.Status.StatusId);
             populateStatusDropList();
             return View(sample);
@@ -297,9 +307,11 @@ namespace EMTrackerDev.Controllers
                 }
                 return RedirectToAction(nameof(Collected));
             }
-            ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.ApprovedById);
-            ViewData["CollectedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.CollectedById);
-            ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", sample.StatusId);
+            //  ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.ApprovedById);
+            ViewData["AnalysisId"] = new SelectList(_context.Analyses.Where(s => s.AnalysisId == sample.AnalysisId), "AnalysisId", "Name", sample.AnalysisId);
+            ViewData["LocationCodeId"] = new SelectList(_context.Locationcodes.Where(s => s.LocationCodeId == sample.LocationCodeId), "LocationCodeId", "LocationId", sample.LocationCodeId);
+            ViewData["CollectedById"] = new SelectList(_context.Users.Where(s => s.UserId == sample.CollectedById), "UserId", "FirstName", sample.CollectedById);
+            // ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", sample.StatusId);
             return View(sample);
         }
         public async Task<IActionResult> Edit_TestResults(int? id)
@@ -314,10 +326,10 @@ namespace EMTrackerDev.Controllers
             {
                 return NotFound();
             }
-            ViewData["AnalysisResultId"] = new SelectList(_context.AnalysisResults, "AnalysisResultId", "AnalysisResultId");
+            ViewData["AnalysisResultId"] = new SelectList(_context.AnalysisResults.Where(s => s.AnalysisResultId == testResult.AnalysisResultId), "AnalysisResultId", "AnalysisResultId");
 
-            ViewData["EnteredById"] = new SelectList(_context.Users, "UserId", "UserId", testResult.EnteredById);
-            ViewData["TestId"] = new SelectList(_context.Tests, "TestID", "TestID", testResult.TestId);
+            ViewData["EnteredById"] = new SelectList(_context.Users, "UserId", "FirstName", testResult.EnteredById);
+            ViewData["TestId"] = new SelectList(_context.Tests.Where(s => s.TestID == testResult.TestId), "TestID", "TestID", testResult.TestId);
             return View(testResult);
         }
         [HttpPost]
@@ -333,6 +345,8 @@ namespace EMTrackerDev.Controllers
             {
                 try
                 {
+                    testResult.EnteredById = 1;
+                    testResult.EndDate = DateTime.Now;
                     _context.Update(testResult);
 
                     List<TestResult> testResults = _context.TestResults.Where(s => s.amount >0).ToList();
@@ -373,9 +387,9 @@ namespace EMTrackerDev.Controllers
                 }
                 return RedirectToAction(nameof(InProcess));
             }
-            ViewData["AnalysisResultId"] = new SelectList(_context.AnalysisResults, "AnalysisResultId", "AnalysisResultId");
-            ViewData["EnteredById"] = new SelectList(_context.Users, "UserId", "UserId", testResult.EnteredById);
-            ViewData["TestId"] = new SelectList(_context.Tests, "TestID", "TestID", testResult.TestId);
+            ViewData["AnalysisResultId"] = new SelectList(_context.AnalysisResults.Where(s => s.AnalysisResultId == testResult.AnalysisResultId), "AnalysisResultId", "AnalysisResultId");
+            ViewData["EnteredById"] = new SelectList(_context.Users, "UserId", "FirstName", testResult.EnteredById);
+            ViewData["TestId"] = new SelectList(_context.Tests.Where(s => s.TestID == testResult.TestId), "TestID", "TestID", testResult.TestId);
 
             return View(testResult);
         }
@@ -392,10 +406,11 @@ namespace EMTrackerDev.Controllers
             {
                 return NotFound();
             }
-            ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.ApprovedById);
-            ViewData["CollectedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.CollectedById);
-            //ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", sample.Status.StatusId);
-            populateStatusDropList();
+            ViewData["AnalysisId"] = new SelectList(_context.Analyses.Where(s => s.AnalysisId == sample.AnalysisId), "AnalysisId", "Name", sample.AnalysisId);
+            ViewData["LocationCodeId"] = new SelectList(_context.Locationcodes.Where(s => s.LocationCodeId == sample.LocationCodeId), "LocationCodeId", "LocationId", sample.LocationCodeId);
+            ViewData["CollectedById"] = new SelectList(_context.Users.Where(s => s.UserId == sample.CollectedById), "UserId", "FirstName", sample.CollectedById);
+            ViewData["StatusId"] = new SelectList(_context.Statuses.Where(s => s.StatusId > 4), "StatusId", "StatusName", sample.StatusId);
+            //populateStatusDropList();
             return View(sample);
         }
         // POST: Samples/Edit/5
@@ -430,12 +445,13 @@ namespace EMTrackerDev.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Completed));
             }
-            ViewData["ApprovedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.ApprovedById);
-            ViewData["CollectedById"] = new SelectList(_context.Users, "UserId", "UserId", sample.CollectedById);
-            // ViewData["StatusId"] = new SelectList(_context.Statuses, "StatusId", "StatusId", sample.StatusId);
-            populateStatusDropList();
+            ViewData["AnalysisId"] = new SelectList(_context.Analyses.Where(s => s.AnalysisId == sample.AnalysisId), "AnalysisId", "Name", sample.AnalysisId);
+            ViewData["LocationCodeId"] = new SelectList(_context.Locationcodes.Where(s => s.LocationCodeId == sample.LocationCodeId), "LocationCodeId", "LocationId", sample.LocationCodeId);
+            ViewData["CollectedById"] = new SelectList(_context.Users.Where(s => s.UserId == sample.CollectedById), "UserId", "FirstName", sample.CollectedById);
+            ViewData["StatusId"] = new SelectList(_context.Statuses.Where(s=>s.StatusId>4), "StatusId", "StatusName", sample.StatusId);
+           // populateStatusDropList();
             return View(sample);
         }
 
@@ -491,7 +507,14 @@ namespace EMTrackerDev.Controllers
                               select q;
             ViewBag.StatusId = new SelectList(statusQuery, "StatusId", "StatusName", selectedStatus);
         }
-       
+        public void populateAnalysis(object analysis = null)
+        {
+            var analysisQuery = from q in _context.Analyses
+                              
+                              select q;
+            ViewBag.AnalysisId = new SelectList(analysisQuery, "AnalysisId", "Name", analysis);
+        }
+
     }
 }
 

@@ -54,7 +54,7 @@
                     @Html.DisplayFor(modelItem => item.SampleID)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.LocationCodeId)
+                    @Html.DisplayFor(modelItem => item.LocationCode.LocationId)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CollectedDate)
@@ -69,10 +69,10 @@
                     @Html.DisplayFor(modelItem => item.latitude)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CollectedBy.UserId)
+                    @Html.DisplayFor(modelItem => item.CollectedBy.FirstName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ApprovedBy.UserId)
+                    @Html.DisplayFor(modelItem => item.ApprovedBy.FirstName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.longitude)
