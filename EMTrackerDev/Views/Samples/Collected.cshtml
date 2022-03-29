@@ -19,9 +19,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.CollectedDate)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ApprovedDate)
-            </th>
+    
             <th>
                 @Html.DisplayNameFor(model => model.amount)
             </th>
@@ -31,9 +29,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.CollectedBy)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ApprovedBy)
-            </th>
+      
             <th>
                 @Html.DisplayNameFor(model => model.longitude)
             </th>
@@ -59,9 +55,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.CollectedDate)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ApprovedDate)
-                </td>
+           
                 <td>
                     @Html.DisplayFor(modelItem => item.amount)
                 </td>
@@ -71,9 +65,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.CollectedBy.FirstName)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ApprovedBy.FirstName)
-                </td>
+      
                 <td>
                     @Html.DisplayFor(modelItem => item.longitude)
                 </td>
@@ -84,8 +76,8 @@
                     @Html.DisplayFor(modelItem => item.Analysis.Name)
                 </td>
                 <td>
-                     <a asp-action="Edit_Collected" asp-route-id="@item.SampleID">Anaylze</a>
-                     <a asp-action="Details" asp-route-id="@item.SampleID">Details</a>
+                     <a asp-action="Edit_Collected" asp-route-id="@item.SampleID">Anaylze</a> <br />
+                     <a asp-action="Details" asp-route-id="@item.SampleID">Details</a><br />
                     <!--<a asp-action="Delete" asp-route-id="@item.SampleID">Delete</a>-->
                     <a asp-action="Tests" asp-route-id="@item.SampleID">Tests</a>
 
