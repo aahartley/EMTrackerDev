@@ -4,36 +4,15 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1></h1>Generate a Report</h1>
+<br />
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.file)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.file)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ResultID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ResultID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ResultID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+
 @using (Html.BeginForm("Export", "Results", FormMethod.Post))
-    {
-        <input type="submit" value="Export"/>
-    }
+{
+    <p>Report of Approved Samples</p>
+
+    <input type="submit" value="Export" />
+}
+<br />
